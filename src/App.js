@@ -7,7 +7,7 @@ import DashboardSidebar from "./shared/DashboardSidebar/DashboardSidebar";
 import Header from "./shared/Header/Header";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import AddAdmin from "./pages/Dashboard/AddAdmin";
+import Admin from "./pages/Dashboard/Admin";
 import Parents from "./pages/Dashboard/Parents";
 import Teachers from "./pages/Dashboard/Teachers";
 import Students from "./pages/Dashboard/Students";
@@ -28,6 +28,7 @@ function App() {
       <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard/>}>
         {/* nested route */}
+          <Route path="admin" element={<Admin/>} />
           <Route path="parents" element={<Parents/>} />
           <Route path="teachers" element={<Teachers/>} />
           <Route path="students" element={<Students/>} />

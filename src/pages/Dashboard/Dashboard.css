@@ -1,0 +1,37 @@
+/* admin css */
+.parent-icon{
+    background-color: #2ad7c659;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    font-size: 40px;
+    padding: 10px;
+    text-align: center;
+}
+.parent-icon2{
+    background-color: #051f3e47;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    font-size: 40px;
+    padding: 10px;
+    text-align: center;
+}
+.parent-icon3{
+    background-color: #28a74652;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    font-size: 40px;
+    padding: 10px;
+    text-align: center;
+}
+.parent-icon4{
+    background-color: #fbbe2353;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    font-size: 40px;
+    padding: 10px;
+    text-align: center;
+}

@@ -13,7 +13,7 @@ const DashboardSidebar = ({ children }) => {
     <>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content  flex flex-col items-center justify-center">
+        <div className="drawer-content p-10">
           {/* <!-- Page content here --> */}
           {children}
           
@@ -30,16 +30,16 @@ const DashboardSidebar = ({ children }) => {
               </div>
               <div className="collapse-content peer-checked:bg-accent">
                 <li className="mt-0.5">
-                  <NavLink to="/dashboard/parents">Admin</NavLink>
+                  <NavLink to="/dashboard/admin">Admin</NavLink>
                 </li>
                 <li className="mt-0.5">
-                  <NavLink to="/dashboard/parents">Teachers</NavLink>
+                  <NavLink to="/dashboard/teachers">Teachers</NavLink>
                 </li>
                 <li className="mt-0.5 ">
                   <NavLink to="/dashboard/parents">Parents</NavLink>
                 </li>
                 <li className="mt-0.5 ">
-                  <NavLink to="/dashboard/parents">Students</NavLink>
+                  <NavLink to="/dashboard/students">Students</NavLink>
                 </li>
               </div>
             </div>

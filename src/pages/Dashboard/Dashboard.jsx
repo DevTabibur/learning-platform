@@ -7,7 +7,6 @@ const Dashboard = () => {
   return (
     <>
         <DashboardSidebar>
-        <h2>Welcome to dashboard</h2>
             <Outlet/>
         </DashboardSidebar>
     </>
