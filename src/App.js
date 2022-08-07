@@ -25,6 +25,7 @@ function App() {
     <>
     <Header>
       <Routes>
+      <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard/>}>
         {/* nested route */}
           <Route path="parents" element={<Parents/>} />
