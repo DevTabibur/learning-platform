@@ -8,8 +8,8 @@ const Header = ({ children }) => {
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
           {/* <!-- Navbar --> */}
-          <div className="w-full navbar bg-base-300 lg:px-20">
-            <label className="btn btn-ghost btn-circle lg:hidden" htmlFor="my-drawer-2">
+          <div className="w-full navbar bg-secondary text-white lg:px-20">
+            <label className="btn btn-ghost btn-circle lg:hidden text-white mr-4" htmlFor="my-drawer-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -25,7 +25,12 @@ const Header = ({ children }) => {
                 />
               </svg>
             </label>
-            <div className="flex-1 px-2 mx-2">E-Learning</div>
+            <div className="flex-1 text-xl font-medium text-white">E-Learning</div>
+            <div class="avatar online">
+  <div class="w-24 rounded-full">
+    <img src="https://placeimg.com/192/192/people" />
+  </div>
+</div>
             <div className="flex-none lg:hidden">
               <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
                 <svg
