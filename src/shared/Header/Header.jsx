@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 const Header = ({ children }) => {
@@ -9,7 +10,10 @@ const Header = ({ children }) => {
         <div className="drawer-content flex flex-col">
           {/* <!-- Navbar --> */}
           <div className="w-full navbar bg-secondary text-white lg:px-20">
-            <label className="btn btn-ghost btn-circle lg:hidden text-white mr-4" htmlFor="my-drawer-2">
+            <label
+              className="btn btn-ghost btn-circle lg:hidden text-white mr-4"
+              htmlFor="my-drawer-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -25,55 +29,37 @@ const Header = ({ children }) => {
                 />
               </svg>
             </label>
-            <div className="flex-1 text-xl font-medium text-white">E-Learning</div>
-            <div class="avatar online">
-  <div class="w-24 rounded-full">
-    <img src="https://placeimg.com/192/192/people" />
-  </div>
-</div>
-            <div className="flex-none lg:hidden">
-              <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="inline-block w-6 h-6 stroke-current"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  ></path>
-                </svg>
-              </label>
+            <div className="flex-1 text-xl font-medium text-white">
+              E-Learning
             </div>
-            <div className="flex-none hidden lg:block">
-              <ul className="menu menu-horizontal">
-                {/* <!-- Navbar menu content here --> */}
+            {/* profile */}
+            <div className="dropdown dropdown-end">
+              <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img src="https://placeimg.com/80/80/people" />
+                </div>
+              </label>
+              <ul
+                tabIndex="0"
+                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-accent rounded-box w-52"
+              >
                 <li>
-                  <a>Navbar Item 1</a>
+                  <NavLink to="/profile" className="justify-between">
+                    Profile
+                    <span className="badge">New</span>
+                  </NavLink>
                 </li>
                 <li>
-                  <a>Navbar Item 2</a>
+                  <NavLink to="/settings">Settings</NavLink>
+                </li>
+                <li>
+                  <NavLink to='/logout'>Logout</NavLink>
                 </li>
               </ul>
             </div>
           </div>
           {/* <!-- Page content here --> */}
           {children}
-        </div>
-        <div className="drawer-side">
-          <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-          <ul className="menu p-4 overflow-y-auto w-80 bg-base-100">
-            {/* <!-- Sidebar content here --> */}
-            <li>
-              <a>Sidebar Item 1</a>
-            </li>
-            <li>
-              <a>Sidebar Item 2</a>
-            </li>
-          </ul>
         </div>
       </div>
     </>

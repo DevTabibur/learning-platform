@@ -20,7 +20,7 @@ const DashboardSidebar = ({ children }) => {
         </div>
         <div className="drawer-side border-collapse  h-auto">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu  w-80 bg-accent rounded text-lime-100">
+          <ul className="menu w-52 bg-accent rounded text-white">
             {/* <!-- Sidebar content here --> */}
 
             <div className="collapse collapse-arrow bg-secondary">
