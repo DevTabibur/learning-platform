@@ -1,5 +1,13 @@
 import React, { Children } from "react";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBookOpenReader,
+  faPersonChalkboard,
+  faPeopleGroup,
+  faSackDollar,
+} from "@fortawesome/free-solid-svg-icons";
+
 
 const DashboardSidebar = ({ children }) => {
   let activeStyle = {
