@@ -11,7 +11,7 @@ const Login = () => {
           <h1 className='text-center text-2xl'>Login</h1>
           <div className='form-control'>
             <label className='label'>
-              <span className='label-text'>Email</span>
+              <span className='label-text'>Email*</span>
             </label>
             <input
               type='text'
