@@ -3,3 +3,4 @@
 2. Font Awesome
 3. Recharts
 4. jquery
+5. react hoook form

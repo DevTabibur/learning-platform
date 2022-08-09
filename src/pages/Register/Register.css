@@ -43,8 +43,8 @@ p {
 #msform fieldset:not(:first-of-type) {
     display: none
 }
-
-#msform input,
+/* 
+#msform input, */
 #msform textarea {
     padding: 8px 15px 8px 15px;
     border: 1px solid #ccc;
@@ -60,7 +60,7 @@ p {
     letter-spacing: 1px
 }
 
-#msform input:focus,
+/* #msform input:focus, */
 #msform textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;

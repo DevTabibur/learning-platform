@@ -38,7 +38,7 @@ const Login = () => {
             <button className='btn btn-primary'>Login</button>
           </div>
           <div className='divider mb-0 pb-0'>OR</div>
-          <Link to="/register" className="mb-2 font-mono">Are you new here? Please register</Link>
+          <Link to="/register" className='label-text-alt link link-hover mb-2 font-mono'>Are you new here? Please register</Link>
           <button className='btn btn-glass hover:btn-accent'>
             Continue with google
           </button>
