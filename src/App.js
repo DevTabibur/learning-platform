@@ -19,6 +19,8 @@ import Routine from "./pages/Dashboard/ClassRoutines";
 import Attendance from "./pages/Dashboard/Attendance";
 import Exam from "./pages/Dashboard/Exam";
 import Settings from "./pages/Dashboard/Settings";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 
 function App() {
   
@@ -42,6 +44,8 @@ function App() {
           <Route path="exam" element={<Exam/>} />
           <Route path="settings" element={<Settings/>} />
         </Route>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
       </Routes>
       </Header>
     </>
