@@ -4,7 +4,7 @@ const useStudents = () => {
     const [loadStudents, setLoadStudents] = useState([]);
 
     useEffect(() =>{
-        fetch(`students.json`)
+        fetch(`http://localhost:5000/students`)
         .then(res => res.json())
         .then(data =>{
             // console.log("data inside use students", data);

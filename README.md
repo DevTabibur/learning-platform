@@ -4,3 +4,5 @@
 3. Recharts
 4. jquery
 5. react hoook form
+6. react firebase hooks
+7. firebase
