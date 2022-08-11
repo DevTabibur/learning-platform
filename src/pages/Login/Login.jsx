@@ -59,7 +59,7 @@ const Login = () => {
               </label>
 
               <input
-                type="text"
+                type="password"
                 placeholder="password"
                 className="input input-bordered"
                 {...register("password", {
@@ -109,9 +109,6 @@ const Login = () => {
             <div  className="btn btn-glass hover:btn-accent flex">
               <Link to="/register">Continue with google</Link>
             </div>
-            {/* <button>
-              Continue with google
-            </button> */}
           </form>
         </div>
       </div>
