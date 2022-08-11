@@ -2,16 +2,10 @@ import React from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from "../../firebase/firebase.init";
 
 const Login = () => {
-  const [
-    createUserWithEmailAndPassword,
-    createUser,
-    createLoading,
-    createError,
-  ] = useCreateUserWithEmailAndPassword(auth);
+  
 
   const {
     register,
@@ -21,22 +15,20 @@ const Login = () => {
 
   const navigate = useNavigate();
   const onSubmit = async (data) => {
-    await createUserWithEmailAndPassword(data.email, data.password);
     navigate("/")
   };
 
 
   // for error showing message
   let signInError;
-  if(createError){
-    return (
-      <>
-        <p className="text-red-500">
-          {createError?.message}
-        </p>
-      </>
-    )
-  }
+  // if(createError){
+  //   return (
+  //     <>
+  //       <p className="text-red-500">
+  //       </p>
+  //     </>
+  //   )
+  // }
   return (
     <div className="h-screen flex bg-accent justify-center items-center">
       <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

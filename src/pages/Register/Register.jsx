@@ -1,19 +1,67 @@
 import React from "react";
 import $ from "jquery";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
+import auth from "../../firebase/firebase.init";
+import Loader from "../../shared/Loader/Loader";
+import useToken from "../hooks/useToken";
 
 const Register = () => {
+  const [
+    createUserWithEmailAndPassword,
+    createUser,
+    createLoading,
+    createError,
+  ] = useCreateUserWithEmailAndPassword(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
-    console.log("register", data);
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name })
   };
+
+  // for getting successful user
+  const [token] = useToken(createUser || googleUser || updateProfile)
+ if(token){
+  navigate("/")
+ }
+
+  // for loading/processing
+  if(createLoading || googleLoading || updating){
+    return (
+      <>
+        <Loader/>
+      </>
+    )
+  }
+
+  // fow showing error messages
+  let signInError;
+  if (createError || googleError || updateError) {
+    signInError = (
+      <>
+        <p className="text-red-500">
+          {createError?.message || googleError?.message || updateError?.message}
+        </p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -113,7 +161,9 @@ const Register = () => {
                   )}
                 </label>
               </div>
-
+              <label className="label">
+                <span className="label-text">{signInError}</span>
+              </label>
               <div className="form-control mt-6">
                 <input
                   className="btn btn-primary"
@@ -127,8 +177,11 @@ const Register = () => {
                 <Link to="/login">Already have account? Please login.</Link>
               </div>
 
-              <div className="btn btn-glass hover:btn-accent flex">
-                <Link to="/login">Continue with google</Link>
+              <div
+                className="btn btn-glass hover:btn-accent flex"
+                onClick={() => signInWithGoogle()}
+              >
+                Continue with google
               </div>
             </form>
           </div>

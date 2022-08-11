@@ -1,8 +1,18 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase/firebase.init";
+import { signOut } from "firebase/auth";
 
 const Header = ({ children }) => {
+  const [user, loading, error] = useAuthState(auth);
+
+  // for logout
+  const logOut = () => {
+    signOut(auth);
+  };
+
   return (
     <>
       <div className="drawer drawer-end">
@@ -30,31 +40,35 @@ const Header = ({ children }) => {
               </svg>
             </label>
             <div className="flex-1 text-xl font-medium text-white">
-             <Link to="/"> E-Learning</Link>
+              <Link to="/"> E-Learning</Link>
             </div>
-            
 
             {/* profile / admin */}
 
             <div className="dropdown dropdown-end">
-              <div className="flex">
-                <label
-                  tabIndex="0"
-                  className="btn btn-ghost btn-circle w-20 mr-5"
-                >
-                  <div className="indicator mt-0 pt-0">
-                    <h2>John Doe</h2>
-                    <span className="badge badge-sm indicator-item -mt-2 lowercase">
-                      Admin
-                    </span>
-                  </div>
-                </label>
-                <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
-                  <div className="w-10 rounded-full">
-                    <img src="https://placeimg.com/80/80/people" />
-                  </div>
-                </label>
-              </div>
+              {user && (
+                <div className="flex">
+                  <label
+                    tabIndex="0"
+                    className="btn btn-ghost btn-circle w-20 mr-5"
+                  >
+                    <div className="indicator mt-0 pt-0">
+                      <h2>John Doe</h2>
+                      <span className="badge badge-sm indicator-item -mt-2 lowercase">
+                        Admin
+                      </span>
+                    </div>
+                  </label>
+                  <label
+                    tabIndex="0"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img src={user?.photoURL} />
+                    </div>
+                  </label>
+                </div>
+              )}
 
               <ul
                 tabIndex="0"
@@ -70,7 +84,7 @@ const Header = ({ children }) => {
                   <NavLink to="/settings">Settings</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/logout">Logout</NavLink>
+                  <button onClick={logOut}>Logout</button>
                 </li>
               </ul>
             </div>
