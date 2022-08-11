@@ -1,19 +1,42 @@
 import React from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from "../../firebase/firebase.init";
 
 const Login = () => {
+  const [
+    createUserWithEmailAndPassword,
+    createUser,
+    createLoading,
+    createError,
+  ] = useCreateUserWithEmailAndPassword(auth);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
-    console.log(data);
+    await createUserWithEmailAndPassword(data.email, data.password);
+    navigate("/")
   };
 
+
+  // for error showing message
+  let signInError;
+  if(createError){
+    return (
+      <>
+        <p className="text-red-500">
+          {createError?.message}
+        </p>
+      </>
+    )
+  }
   return (
     <div className="h-screen flex bg-accent justify-center items-center">
       <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -94,6 +117,7 @@ const Login = () => {
                 </a>
               </label>
             </div>
+            {signInError}
             <div className="form-control mt-6">
               <input
                 className="btn btn-primary"
