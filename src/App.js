@@ -42,8 +42,9 @@ function App() {
           <Route path="/register" element={<Register />} />
 
           {/* private routes with nested element*/}
-          <Route element={<RequireAuth></RequireAuth>}>
-            <Route path="/dashboard" element={<Dashboard />}>
+
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route element={<RequireAuth></RequireAuth>}>
               {privateRoute.map(({ path, name, Component }, idx) => (
                 <Route key={idx} path={path} element={<Component />} />
               ))}

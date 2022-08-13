@@ -40,11 +40,11 @@ const Login = () => {
   const [token] = useToken(googleUser || signInUser);
   // if token is valid, then user will automatically redirect their page..
   let from = location.state?.from?.pathname || "/";
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate(from, { replace: true });
-  //   }
-  // }, [token, from, navigate]);
+  useEffect(() => {
+    if (token) {
+      navigate(from, { replace: true });
+    }
+  }, [token, from, navigate]);
 
   // for loading
   if (signInLoading || googleLoading || resetLoading) {

@@ -38,13 +38,13 @@ const Register = () => {
 
   // for getting successful user
   const [token] = useToken(createUser || googleUser);
-  // useEffect(()=>{
-  //   if (token) {
-  //     navigate("/");
-  //   }
-  // }, [])
+  useEffect(()=>{
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
   // if (token) {
-  //   navigate("/");
+  //   navigate("/dashboard");
   // }
 
   // for loading/processing
