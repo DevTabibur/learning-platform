@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
 
 const Loader = () => {
   return (
-    <button className="btn loading">Processing...</button>
-  )
-}
+    <>
+      <div className="flex items-center justify-center mt-80">
+        <button className="btn loading btn-accent">Processing...</button>
+      </div>
+    </>
+  );
+};
 
-export default Loader
+export default Loader;

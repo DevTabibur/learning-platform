@@ -29,8 +29,8 @@ function App() {
     <>
       <Header>
         <Routes>
+          {/* nested route */}
           <Route path="/dashboard" element={<Dashboard />}>
-            {/* nested route */}
             {/* public routes */}
             {nestedAndPublicRoutes.map(({ path, name, Component }, idx) => (
               <Route key={idx} path={path} element={<Component />} />
@@ -41,13 +41,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* private routes */}
-
+          {/* private routes with nested element*/}
           <Route element={<RequireAuth></RequireAuth>}>
-          <Route path="/dashboard" element={<Dashboard />}>
-            {privateRoute.map(({ path, name, Component }, idx) => (
-              <Route key={idx} path={path} element={<Component />} />
-            ))}
+            <Route path="/dashboard" element={<Dashboard />}>
+              {privateRoute.map(({ path, name, Component }, idx) => (
+                <Route key={idx} path={path} element={<Component />} />
+              ))}
             </Route>
           </Route>
         </Routes>
