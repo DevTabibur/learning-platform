@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import $ from "jquery";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const Register = () => {
   ] = useCreateUserWithEmailAndPassword(auth);
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
-    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
   const {
     register,
@@ -33,33 +33,38 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
-    await updateProfile({ displayName: data.name })
+    await updateProfile({ displayName: data.name });
   };
 
   // for getting successful user
-  const [token] = useToken(createUser || googleUser || updateProfile)
- if(token){
-  navigate("/")
- }
+  const [token] = useToken(createUser || googleUser);
+  // useEffect(()=>{
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  // }, [])
+  // if (token) {
+  //   navigate("/");
+  // }
 
   // for loading/processing
-  if(createLoading || googleLoading || updating){
+  if (createLoading || googleLoading || updating) {
     return (
       <>
-        <Loader/>
+        <Loader />
       </>
-    )
+    );
   }
 
   // fow showing error messages
   let signInError;
   if (createError || googleError || updateError) {
     signInError = (
-      <>
+      <small>
         <p className="text-red-500">
           {createError?.message || googleError?.message || updateError?.message}
         </p>
-      </>
+      </small>
     );
   }
 

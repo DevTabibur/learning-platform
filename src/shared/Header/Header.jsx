@@ -11,6 +11,7 @@ const Header = ({ children }) => {
   // for logout
   const logOut = () => {
     signOut(auth);
+    alert("logout successfully")
   };
 
   return (
@@ -40,13 +41,13 @@ const Header = ({ children }) => {
               </svg>
             </label>
             <div className="flex-1 text-xl font-medium text-white">
-              <Link to="/"> E-Learning</Link>
+              <Link to="/dashboard"> E-Learning</Link>
             </div>
 
             {/* profile / admin */}
 
-            <div className="dropdown dropdown-end">
-              {user && (
+            {user ? (
+              <div className="dropdown dropdown-end">
                 <div className="flex">
                   <label
                     tabIndex="0"
@@ -68,26 +69,37 @@ const Header = ({ children }) => {
                     </div>
                   </label>
                 </div>
-              )}
 
-              <ul
-                tabIndex="0"
-                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-accent rounded-box w-52"
-              >
-                <li>
-                  <NavLink to="/profile" className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/settings">Settings</NavLink>
-                </li>
-                <li>
-                  <button onClick={logOut}>Logout</button>
-                </li>
-              </ul>
-            </div>
+                <ul
+                  tabIndex="0"
+                  className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-accent rounded-box w-52"
+                >
+                  <li>
+                    <NavLink to="/profile" className="justify-between">
+                      Profile
+                      <span className="badge">New</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/settings">Settings</NavLink>
+                  </li>
+                  <li>
+                    <button onClick={logOut}>Logout</button>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <div className="flex">
+                <label
+                  tabIndex="0"
+                  className="btn btn-ghost btn-circle w-20 mr-5"
+                >
+                  <div className="indicator mt-0 pt-0">
+                    <Link to="/login">Login</Link>
+                  </div>
+                </label>
+              </div>
+            )}
           </div>
           {/* <!-- Page content here --> */}
           {children}

@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import auth from "../../firebase/firebase.init";
+import {
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import Loader from "../../shared/Loader/Loader";
+import useToken from "../hooks/useToken";
 
 const Login = () => {
-  
+  const [signInWithEmailAndPassword, signInUser, signInLoading, signInError] =
+    useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
+  const [sendPasswordResetEmail, resetLoading, resetError] =
+    useSendPasswordResetEmail(auth);
 
   const {
     register,
@@ -13,22 +25,44 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate();
+  const [email, setEmail] = useState([]);
   const onSubmit = async (data) => {
-    navigate("/")
+    await signInWithEmailAndPassword(data.email, data.password);
+    await setEmail(data.email);
   };
 
+  // for returning user the exact page he wants to enter after login
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // for getting user
+  // if user is login, then we'll give it token.. and then redirect to the home page
+  const [token] = useToken(googleUser || signInUser);
+  // if token is valid, then user will automatically redirect their page..
+  let from = location.state?.from?.pathname || "/";
+  // useEffect(() => {
+  //   if (token) {
+  //     navigate(from, { replace: true });
+  //   }
+  // }, [token, from, navigate]);
+
+  // for loading
+  if (signInLoading || googleLoading || resetLoading) {
+    return <Loader />;
+  }
 
   // for error showing message
-  let signInError;
-  // if(createError){
-  //   return (
-  //     <>
-  //       <p className="text-red-500">
-  //       </p>
-  //     </>
-  //   )
-  // }
+  let showError;
+  if (signInError || googleError || resetError) {
+    showError = (
+      <small>
+        <p className="text-red-500">
+          {signInError?.message || googleError?.message || resetError?.message}
+        </p>
+      </small>
+    );
+  }
+
   return (
     <div className="h-screen flex bg-accent justify-center items-center">
       <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -100,16 +134,18 @@ const Login = () => {
                   </span>
                 )}
               </label>
-              <label className="label">
-                <a
-                  href="#"
-                  className="label-text-alt link link-hover font-semibold"
-                >
+              <label
+                className="label"
+                onClick={async () => {
+                  await sendPasswordResetEmail(email);
+                }}
+              >
+                <p className="label-text-alt link link-hover font-semibold">
                   Forgot password?
-                </a>
+                </p>
               </label>
             </div>
-            {signInError}
+            {showError}
             <div className="form-control mt-6">
               <input
                 className="btn btn-primary"
@@ -122,8 +158,11 @@ const Login = () => {
               <Link to="/register">Are you new here? Please register</Link>
             </div>
 
-            <div  className="btn btn-glass hover:btn-accent flex">
-              <Link to="/register">Continue with google</Link>
+            <div
+              className="btn btn-glass hover:btn-accent flex"
+              onClick={() => signInWithGoogle()}
+            >
+              Continue with google
             </div>
           </form>
         </div>
