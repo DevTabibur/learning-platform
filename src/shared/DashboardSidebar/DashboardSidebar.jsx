@@ -34,7 +34,7 @@ const DashboardSidebar = ({ children }) => {
             <div className="collapse collapse-arrow bg-secondary">
               <input type="checkbox" className="peer" />
               <div className="collapse-title font-medium">
-                <NavLink to="/dashboard/parents">Dashboard</NavLink>
+                Dashboard
               </div>
               <div className="collapse-content peer-checked:bg-accent">
                 <li className="mt-0.5">
@@ -48,6 +48,9 @@ const DashboardSidebar = ({ children }) => {
                 </li>
                 <li className="mt-0.5 ">
                   <NavLink to="/dashboard/students">Students</NavLink>
+                </li>
+                <li className="mt-0.5 ">
+                  <NavLink to="/dashboard/users">Users</NavLink>
                 </li>
               </div>
             </div>

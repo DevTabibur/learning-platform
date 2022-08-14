@@ -38,14 +38,12 @@ const Register = () => {
 
   // for getting successful user
   const [token] = useToken(createUser || googleUser);
-  useEffect(()=>{
+  // dependency is must be given here.. otherwise it will not work..correctly
+  useEffect(() => {
     if (token) {
       navigate("/dashboard");
     }
   }, [token, navigate]);
-  // if (token) {
-  //   navigate("/dashboard");
-  // }
 
   // for loading/processing
   if (createLoading || googleLoading || updating) {

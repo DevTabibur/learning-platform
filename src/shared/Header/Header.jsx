@@ -11,7 +11,7 @@ const Header = ({ children }) => {
   // for logout
   const logOut = () => {
     signOut(auth);
-    alert("logout successfully")
+    localStorage.removeItem('accessToken');
   };
 
   return (
