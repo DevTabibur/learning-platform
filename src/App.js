@@ -4,7 +4,7 @@
 import Home from "./pages/Home/Home";
 import DashboardSidebar from "./shared/DashboardSidebar/DashboardSidebar";
 import Header from "./shared/Header/Header";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Admin from "./pages/Dashboard/Admin";
 import Parents from "./pages/Dashboard/Parents";
@@ -23,8 +23,12 @@ import Register from "./pages/Register/Register";
 import RequireAuth from "./authentication/RequireAuth";
 import { publicRoutes as nestedAndPublicRoutes } from "./routes/publicRoutes";
 import privateRoute from "./routes/privateRoute";
+import useToken from "./pages/hooks/useToken";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "./firebase/firebase.init";
 
 function App() {
+  
   return (
     <>
       <Header>

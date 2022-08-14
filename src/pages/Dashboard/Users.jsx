@@ -1,10 +1,38 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { Link } from "react-router-dom";
+import Loader from "../../shared/Loader/Loader";
+import useUsers from "../hooks/useUsers";
 
 const Users = () => {
+  const [users, setUsers] = useUsers();
+  console.log(users)
+  // const {
+  //   data:users,
+  //   isLoading,
+  //   error,
+  //   refetch,
+  // } = useQuery('users', () => {
+  //   fetch(`http://localhost:5000/user`, {
+  //     method: "GET",
+  //     headers: {
+  //       "content-type": "application/json",
+  //       authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //     },
+  //   }).then((res) => res.data)
+  // });
+
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
+
+  // if (error) {
+  //   return <>{error?.message}</>;
+  // }
+
   return (
     <>
-    <div className="page-detail mt-0 pt-0">
+      <div className="page-detail mt-0 pt-0">
         <h2 className="text-xl font-bold mb-1">Users</h2>
         <div className="text-sm breadcrumbs mb-5">
           <ul>
@@ -52,49 +80,50 @@ const Users = () => {
         <table className="table table-compact w-full">
           {/* <!-- head --> */}
           <thead>
-            <tr>
-              <th>Id</th>
+          <tr>
+              <th>Serial</th>
               <th>Name</th>
-              <th>Gender</th>
-              <th>Occupation</th>
-              <th>Address</th>
-              <th>Phone</th>
               <th>Email</th>
+              <th>Role</th>
               <th>SEE MORE</th>
             </tr>
           </thead>
           <tbody>
-            {/* {parents.map((parent, index) => (
-              <ShowParentList key={index} parent={parent} />
-            ))} */}
+            {users.map((user, index, refetch) => (
+              <ShowUserList key={index} user={user} refetch={refetch} />
+            ))}
           </tbody>
           {/* <!-- foot --> */}
           <tfoot>
             <tr>
-              <th>Id</th>
+              <th>Serial</th>
               <th>Name</th>
-              <th>Gender</th>
-              <th>Occupation</th>
-              <th>Address</th>
-              <th>Phone</th>
               <th>Email</th>
+              <th>Role</th>
               <th>SEE MORE</th>
             </tr>
           </tfoot>
         </table>
       </div>
-      </>
-  )
-}
+    </>
+  );
+};
 
 export default Users;
 
-
 const ShowUserList = ({ user }) => {
-    return(
-        <>
+  console.log("user22", user);
+  // serial number increasing by one
+  const serial = 1;
+  let i = 1;
+  for ( i = 1; i < serial; i++) {
+    console.log('hello', )
+  }
+
+  return (
+    <>
       <tr>
-        <td className="font-bold">#ID</td>
+        <td className="font-bold"></td>
         <td>
           <div className="flex items-center space-x-3">
             <div className="avatar">
@@ -103,17 +132,17 @@ const ShowUserList = ({ user }) => {
               </div>
             </div>
             <div>
-              <div className="font-bold">Name</div>
+              <div className="font-bold">{user?.name}</div>
               <div className="text-sm opacity-50">Address</div>
             </div>
           </div>
         </td>
-        <td>gender</td>
-        <td>occ</td>
+        <td>{user?.email}</td>
+        <td>{(user?.role) ?  (user?.role) : "New User"}</td>
         <th>
           <button className="btn btn-secondary">Details</button>
         </th>
       </tr>
     </>
-    )
-}
+  );
+};
