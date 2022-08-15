@@ -1,34 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loader from "../../shared/Loader/Loader";
 import useUsers from "../hooks/useUsers";
 
 const Users = () => {
-  const [users, setUsers] = useUsers();
-  console.log(users)
-  // const {
-  //   data:users,
-  //   isLoading,
-  //   error,
-  //   refetch,
-  // } = useQuery('users', () => {
-  //   fetch(`http://localhost:5000/user`, {
-  //     method: "GET",
-  //     headers: {
-  //       "content-type": "application/json",
-  //       authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //     },
-  //   }).then((res) => res.data)
-  // });
+  const [users] = useUsers();
+  const navigate = useNavigate();
 
-  // if (isLoading) {
-  //   return <Loader />;
+  const getToken = localStorage.getItem('accessToken');
+  const accessToken = getToken;
+
+  //  || getToken === null || getToken === undefined || getToken === "" || automaticRedirect === true
+  // const automaticRedirect =()=>{
+  //   alert()
+  //   // if(getToken !== accessToken){
+  //   //   // navigate("/login");
+  //   //   alert('dont match')
+  //   // }
   // }
 
-  // if (error) {
-  //   return <>{error?.message}</>;
-  // }
+  // setInterval(automaticRedirect, 3600);
+  
+
+  // only automaticRedirect when only protected route is visited
+  
 
   return (
     <>
@@ -80,7 +76,7 @@ const Users = () => {
         <table className="table table-compact w-full">
           {/* <!-- head --> */}
           <thead>
-          <tr>
+            <tr>
               <th>Serial</th>
               <th>Name</th>
               <th>Email</th>
@@ -112,12 +108,11 @@ const Users = () => {
 export default Users;
 
 const ShowUserList = ({ user }) => {
-  console.log("user22", user);
   // serial number increasing by one
   const serial = 1;
   let i = 1;
-  for ( i = 1; i < serial; i++) {
-    console.log('hello', )
+  for (i = 1; i < serial; i++) {
+    console.log("hello");
   }
 
   return (
@@ -138,9 +133,9 @@ const ShowUserList = ({ user }) => {
           </div>
         </td>
         <td>{user?.email}</td>
-        <td>{(user?.role) ?  (user?.role) : "New User"}</td>
+        <td>{user?.role ? user?.role : "New User"}</td>
         <th>
-          <button className="btn btn-secondary">Details</button>
+          <Link to={`/dashboard/users/${user._id}`} className="btn btn-secondary">Details</Link>
         </th>
       </tr>
     </>

@@ -7,21 +7,16 @@ import {
   faPeopleGroup,
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
-
+import './DashboardSidebar.css';
 
 const DashboardSidebar = ({ children }) => {
-  let activeStyle = {
-    color: "yellow",
-    backgroundColor: "#051f3e",
-  };
 
-  let activeClassName = "underline";
 
   return (
     <>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content p-10">
+        <div className="drawer-content p-10 custom-bg">
           {/* <!-- Page content here --> */}
           {children}
           
