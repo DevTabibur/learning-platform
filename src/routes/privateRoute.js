@@ -2,6 +2,7 @@ import React from 'react'
 import Account from '../pages/Dashboard/Account'
 import Admin from '../pages/Dashboard/Admin'
 import Users from '../pages/Dashboard/Users'
+import UpdateInfo from '../shared/UserDetails/UpdateInfo'
 import UserDetails from '../shared/UserDetails/UserDetails'
 
 export const privateRoute = [

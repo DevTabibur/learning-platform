@@ -26,6 +26,7 @@ import privateRoute from "./routes/privateRoute";
 import useToken from "./pages/hooks/useToken";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "./firebase/firebase.init";
+import UserDetails from "./shared/UserDetails/UserDetails";
 
 function App() {
   
@@ -54,6 +55,9 @@ function App() {
               ))}
             </Route>
           </Route>
+
+
+
         </Routes>
       </Header>
     </>
