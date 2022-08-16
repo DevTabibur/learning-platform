@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, Outlet, useParams } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import auth from "../../firebase/firebase.init";
-import useUserDetails from "../../pages/hooks/useUserDetails";
 import Loader from "../../shared/Loader/Loader";
-import { useForm } from "react-hook-form";
+import Avatar from "../../assets/images/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png";
+import useToken from "../hooks/useToken";
 
 const Profile = () => {
   const [user, loading, error] = useAuthState(auth);
+
   console.log("user", user);
 
-  const { id } = useParams();
+  // for loading
+  if (loading) {
+    return <Loader />;
+  }
 
-  //   const [userDetails] = useUserDetails(id);
-  //   const { email } = userDetails;
-
-  // console.log(userDetails);
-
-  
   return (
     <>
-      <h2 className="text-xl font-bold mb-1">Update User</h2>
+      <h2 className="text-xl font-bold mb-1 text-accent">User Profile</h2>
       <div className="text-sm breadcrumbs mb-5">
         <ul>
-          <li>
+          <li className="font-bold text-accent font-sans">
             <Link to="/dashboard">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +45,7 @@ const Profile = () => {
               Home
             </Link>
           </li>
-          <li>
+          <li className="font-bold text-accent font-sans">
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +60,7 @@ const Profile = () => {
                   d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
                 ></path>
               </svg>
-              Update Profile
+              Profile
             </>
           </li>
         </ul>
@@ -75,14 +79,18 @@ const Profile = () => {
             <div className="card-body items-left text-left relative">
               <div className="avatar online absolute -top-10 left-5">
                 <div className="w-24 rounded-full">
-                  <img src={user?.photoURL} alt="Update Profile" />
+                  {user?.photoURL ? (
+                    <img src={user?.photoURL} alt="Update Profile" />
+                  ) : (
+                    <img src={Avatar} alt="Update Profile" />
+                  )}
                 </div>
               </div>
               <div className="mt-10">
                 {user?.displayName ? (
                   <h2 className="card-title">{user?.displayName}</h2>
                 ) : (
-                  <h2 className="card-title">"Provide your Name"</h2>
+                  <h2 className="card-title">Provide your Name</h2>
                 )}
 
                 <p>Bio</p>
@@ -93,6 +101,11 @@ const Profile = () => {
                 <p className="mb-0">
                   <strong className="pr-1">Class / Section:</strong>4
                 </p>
+                <div className="card-actions mt-4">
+                  <Link className="btn btn-accent" to="/dashboard/settings">
+                    Update Profile
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -105,10 +118,17 @@ const Profile = () => {
               <hr></hr>
               <div className="general-info-list">
                 <ul className="">
-                  <li className="flex my-2">
-                    <strong>Name:</strong>
-                    <p className="ml-4">Tabibur Rahman</p>
-                  </li>
+                  {user?.displayName ? (
+                    <li className="flex my-2">
+                      <strong>Name:</strong>
+                      <p className="ml-4">Tabibur Rahman</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Name:</strong>
+                      <p className="ml-4">Update Your Name</p>
+                    </li>
+                  )}
                   <li className="flex my-2">
                     <strong>Father's Name:</strong>
                     <p className="ml-4">Tabibur Rahman</p>
@@ -133,10 +153,13 @@ const Profile = () => {
                     <strong>E-mail:</strong>
                     <p className="ml-4">{user?.email}</p>
                   </li>
-                  <li className="flex my-2">
+                  {user?.phoneNumber ? (<li className="flex my-2">
                     <strong>Phone:</strong>
-                    <p className="ml-4">Not Provided</p>
-                  </li>
+                    <p className="ml-4">{user?.phoneNumber}</p>
+                  </li>) : (<li className="flex my-2">
+                    <strong>Phone:</strong>
+                    <p className="ml-4">Update Phone Number</p>
+                  </li>)}
                 </ul>
               </div>
             </div>

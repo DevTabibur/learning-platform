@@ -47,7 +47,7 @@ const Settings = () => {
       <h2 className="text-xl font-bold mb-1 text-accent">User Settings</h2>
       <div className="text-sm breadcrumbs mb-5">
         <ul>
-          <li className="font-bold text-accent font-mono">
+          <li className="font-bold text-accent font-sans">
             <Link to="/dashboard">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ const Settings = () => {
               Home
             </Link>
           </li>
-          <li className="font-bold text-accent font-mono">
+          <li className="font-bold text-accent font-sans">
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
