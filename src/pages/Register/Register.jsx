@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import $ from "jquery";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";

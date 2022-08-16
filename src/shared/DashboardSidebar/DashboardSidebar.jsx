@@ -82,9 +82,6 @@ const DashboardSidebar = ({ children }) => {
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/exam">Exam</NavLink>
             </li>
-            <li className="bg-secondary my-0.5">
-              <NavLink to="/dashboard/settings">Setting</NavLink>
-            </li>
           </ul>
         </div>
       </div>

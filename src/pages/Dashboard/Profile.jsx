@@ -3,18 +3,17 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, Outlet, useParams } from "react-router-dom";
 import auth from "../../firebase/firebase.init";
 import useUserDetails from "../../pages/hooks/useUserDetails";
-import Loader from "../Loader/Loader";
-import "./UserDetails.css";
+import Loader from "../../shared/Loader/Loader";
 import { useForm } from "react-hook-form";
 
-const UserDetails = () => {
+const Profile = () => {
   const [user, loading, error] = useAuthState(auth);
+  console.log("user", user);
 
-  const { displayName, photoURL, phoneNumber, _id, } = user;
   const { id } = useParams();
 
-  const [userDetails] = useUserDetails(id);
-  const { email } = userDetails;
+  //   const [userDetails] = useUserDetails(id);
+  //   const { email } = userDetails;
 
   // console.log(userDetails);
 
@@ -31,23 +30,23 @@ const UserDetails = () => {
     // console.log(data);
   };
 
+  const displayName = "";
   // send data in server
-  useEffect(()=>{
-    const url = `http://localhost:5000/user/${email}`
-    fetch(url,{
-      method: "POST",
-      headers:{
-        'content-type' : 'application/json',
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(userUpdate),
-    })
-    .then(res => res.json())
-    // .then(data =>{
-    //   alert('Data updated successfully')
-    // })
-  }, [])
-
+  //   useEffect(()=>{
+  //     const url = `http://localhost:5000/user/${email}`
+  //     fetch(url,{
+  //       method: "POST",
+  //       headers:{
+  //         'content-type' : 'application/json',
+  //         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //       },
+  //       body: JSON.stringify(userUpdate),
+  //     })
+  //     .then(res => res.json())
+  //     // .then(data =>{
+  //     //   alert('Data updated successfully')
+  //     // })
+  //   }, [])
 
   // console.log('userUpdate', userUpdate)
   return (
@@ -56,7 +55,7 @@ const UserDetails = () => {
       <div className="text-sm breadcrumbs mb-5">
         <ul>
           <li>
-            <Link to="/">
+            <Link to="/dashboard">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -88,7 +87,7 @@ const UserDetails = () => {
                   d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
                 ></path>
               </svg>
-              User Details
+              Update Profile
             </>
           </li>
         </ul>
@@ -107,11 +106,16 @@ const UserDetails = () => {
             <div className="card-body items-left text-left relative">
               <div className="avatar online absolute -top-10 left-5">
                 <div className="w-24 rounded-full">
-                  <img src={photoURL} alt="Update Profile" />
+                  <img src={user?.photoURL} alt="Update Profile" />
                 </div>
               </div>
               <div className="mt-10">
-                <h2 className="card-title">{displayName}</h2>
+                {user?.displayName ? (
+                  <h2 className="card-title">{user?.displayName}</h2>
+                ) : (
+                  <h2 className="card-title">"Provide your Name"</h2>
+                )}
+
                 <p>Bio</p>
                 <hr className="px-0 mx-0 w-full my-3"></hr>
                 <p className="mb-0">
@@ -158,7 +162,7 @@ const UserDetails = () => {
                   </li>
                   <li className="flex my-2">
                     <strong>E-mail:</strong>
-                    <p className="ml-4">{email}</p>
+                    <p className="ml-4">{user?.email}</p>
                   </li>
                   <li className="flex my-2">
                     <strong>Phone:</strong>
@@ -311,7 +315,9 @@ const UserDetails = () => {
                 {/* profile photo */}
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <span className="label-text">Upload Your Profile Photo*</span>
+                    <span className="label-text">
+                      Upload Your Profile Photo*
+                    </span>
                   </label>
                   <input
                     type="file"
@@ -489,8 +495,8 @@ const UserDetails = () => {
                       <span className="label-text">Email*</span>
                     </label>
                     <input
-                    readOnly
-                    value={user?.email}
+                      readOnly
+                      value={user?.email}
                       type="text"
                       placeholder="email"
                       className="input input-bordered"
@@ -619,4 +625,4 @@ const UserDetails = () => {
   );
 };
 
-export default UserDetails;
+export default Profile;

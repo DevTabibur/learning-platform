@@ -7,6 +7,7 @@ import ClassRoutines from '../pages/Dashboard/ClassRoutines';
 import Exam from '../pages/Dashboard/Exam';
 import Library from '../pages/Dashboard/Library';
 import Parents from '../pages/Dashboard/Parents';
+import Profile from '../pages/Dashboard/Profile';
 import Settings from '../pages/Dashboard/Settings';
 import Students from '../pages/Dashboard/Students';
 import Subjects from '../pages/Dashboard/Subjects';
@@ -23,4 +24,5 @@ export const publicRoutes = [
     {path:"/dashboard/attendance", name:"Attendance", Component: Attendance},
     {path:"/dashboard/exam", name:"Exam", Component: Exam},
     {path:"/dashboard/settings", name:"Settings", Component: Settings},
+    {path:"/dashboard/profile", name:"Profile", Component: Profile},
 ]

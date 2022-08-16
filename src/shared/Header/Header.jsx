@@ -75,13 +75,13 @@ const Header = ({ children }) => {
                   className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-accent rounded-box w-52"
                 >
                   <li>
-                    <NavLink to="/profile" className="justify-between">
+                    <NavLink to="/dashboard/profile" className="justify-between">
                       Profile
                       <span className="badge">New</span>
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/settings">Settings</NavLink>
+                    <NavLink to="/dashboard/settings">Settings</NavLink>
                   </li>
                   <li>
                     <button onClick={logOut}>Logout</button>
