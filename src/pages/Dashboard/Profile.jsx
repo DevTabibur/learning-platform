@@ -11,29 +11,11 @@ import auth from "../../firebase/firebase.init";
 import Loader from "../../shared/Loader/Loader";
 import Avatar from "../../assets/images/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png";
 import useToken from "../hooks/useToken";
+import useProfile from "../hooks/useProfileInfo";
 
 const Profile = () => {
   const [user, loading, error] = useAuthState(auth);
-  const [userInfo, setUserInfo] = useState([]);
-  const [dataLoad, setDataLoad] = useState(false);
-
-  // filter with email data
-  const email = user?.email;
-  const url = `http://localhost:5000/userWithEmail/${email}`;
-
-  if (email) {
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserInfo(data);
-      });
-  }
+  const [userProfileInfo] = useProfile();
 
   // for loading
   if (loading) {
@@ -111,36 +93,36 @@ const Profile = () => {
                   <h2 className="card-title">Provide your Name</h2>
                 )}
 
-                {userInfo?.bio ? (
-                  <p>{userInfo?.bio}</p>
+                {userProfileInfo?.bio ? (
+                  <p>{userProfileInfo?.bio}</p>
                 ) : (
                   <p>Provide Bio Data</p>
                 )}
                 <hr className="px-0 mx-0 w-full my-3"></hr>
-                {userInfo?.role ? (
+                {userProfileInfo?.role ? (
                   <p className="mb-0">
                     <strong className="pr-1">Role:</strong>
-                    {userInfo?.role}
+                    {userProfileInfo?.role}
                   </p>
                 ) : (
                   <p className="mb-0">
                     <strong className="pr-1">Role:</strong>Update your role
                   </p>
                 )}
-                {userInfo?.id ? (
+                {userProfileInfo?.id ? (
                   <p className="mb-0">
                     <strong className="pr-1">ID:</strong>
-                    {userInfo?.id}
+                    {userProfileInfo?.id}
                   </p>
                 ) : (
                   <p className="mb-0">
                     <strong className="pr-1">ID:</strong>Update Your ID
                   </p>
                 )}
-                {userInfo?.class ? (
+                {userProfileInfo?.class ? (
                   <p className="mb-0">
                     <strong className="pr-1">Class / Section:</strong>
-                    {userInfo?.class}
+                    {userProfileInfo?.class}
                   </p>
                 ) : (
                   <p className="mb-0">
@@ -165,10 +147,10 @@ const Profile = () => {
               <hr></hr>
               <div className="general-info-list">
                 <ul className="">
-                  {userInfo?.name ? (
+                  {userProfileInfo?.name ? (
                     <li className="flex my-2">
                       <strong>Name:</strong>
-                      <p className="ml-4">{userInfo?.name}</p>
+                      <p className="ml-4">{userProfileInfo?.name}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -176,10 +158,10 @@ const Profile = () => {
                       <p className="ml-4">Update Your Name</p>
                     </li>
                   )}
-                  {userInfo?.fathersName ? (
+                  {userProfileInfo?.fathersName ? (
                     <li className="flex my-2">
                       <strong>Father's Name:</strong>
-                      <p className="ml-4">{userInfo?.fathersName}</p>
+                      <p className="ml-4">{userProfileInfo?.fathersName}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -187,10 +169,10 @@ const Profile = () => {
                       <p className="ml-4">Update Father's Name</p>
                     </li>
                   )}
-                  {userInfo?.mothersName ? (
+                  {userProfileInfo?.mothersName ? (
                     <li className="flex my-2">
                       <strong>Mother's Name:</strong>
-                      <p className="ml-4">{userInfo?.mothersName}</p>
+                      <p className="ml-4">{userProfileInfo?.mothersName}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -198,10 +180,10 @@ const Profile = () => {
                       <p className="ml-4">Update Mother's Name</p>
                     </li>
                   )}
-                  {userInfo?.gender ? (
+                  {userProfileInfo?.gender ? (
                     <li className="flex my-2">
                       <strong>Gender:</strong>
-                      <p className="ml-4">{userInfo?.gender}</p>
+                      <p className="ml-4">{userProfileInfo?.gender}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -209,10 +191,10 @@ const Profile = () => {
                       <p className="ml-4">Update Your Gender</p>
                     </li>
                   )}
-                  {userInfo?.dob ? (
+                  {userProfileInfo?.dob ? (
                     <li className="flex my-2">
                       <strong>Date of Birth:</strong>
-                      <p className="ml-4">{userInfo?.dob}</p>
+                      <p className="ml-4">{userProfileInfo?.dob}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -220,10 +202,10 @@ const Profile = () => {
                       <p className="ml-4">Update Date Of Birth</p>
                     </li>
                   )}
-                  {userInfo?.religion ? (
+                  {userProfileInfo?.religion ? (
                     <li className="flex my-2">
                       <strong>Religion:</strong>
-                      <p className="ml-4">{userInfo?.religion}</p>
+                      <p className="ml-4">{userProfileInfo?.religion}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -231,10 +213,10 @@ const Profile = () => {
                       <p className="ml-4">Update religion</p>
                     </li>
                   )}
-                  {userInfo?.occupation ? (
+                  {userProfileInfo?.occupation ? (
                     <li className="flex my-2">
                       <strong>Father's Occupation:</strong>
-                      <p className="ml-4">{userInfo?.occupation}</p>
+                      <p className="ml-4">{userProfileInfo?.occupation}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -246,10 +228,10 @@ const Profile = () => {
                     <strong>E-mail:</strong>
                     <p className="ml-4">{user?.email}</p>
                   </li>
-                  {userInfo?.phone ? (
+                  {userProfileInfo?.phone ? (
                     <li className="flex my-2">
                       <strong>Phone:</strong>
-                      <p className="ml-4">{userInfo?.phone}</p>
+                      <p className="ml-4">{userProfileInfo?.phone}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">

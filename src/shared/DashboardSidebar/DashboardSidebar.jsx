@@ -45,7 +45,7 @@ const DashboardSidebar = ({ children }) => {
               </div>
             </div>
 
-            <li className="bg-secondary mt-0.5">
+            <li className="bg-secondary mt-0.5 inline-block">
               <NavLink to="/dashboard/parents">Parents</NavLink>
             </li>
 
