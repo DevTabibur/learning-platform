@@ -7,11 +7,9 @@ import {
   faPeopleGroup,
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import './DashboardSidebar.css';
+import "./DashboardSidebar.css";
 
 const DashboardSidebar = ({ children }) => {
-
-
   return (
     <>
       <div className="drawer drawer-mobile">
@@ -19,7 +17,6 @@ const DashboardSidebar = ({ children }) => {
         <div className="drawer-content p-10 custom-bg">
           {/* <!-- Page content here --> */}
           {children}
-          
         </div>
         <div className="drawer-side border-collapse  h-auto">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
@@ -28,9 +25,7 @@ const DashboardSidebar = ({ children }) => {
 
             <div className="collapse collapse-arrow bg-secondary">
               <input type="checkbox" className="peer" />
-              <div className="collapse-title font-medium">
-                Dashboard
-              </div>
+              <div className="collapse-title font-medium">Dashboard</div>
               <div className="collapse-content peer-checked:bg-accent">
                 <li className="mt-0.5">
                   <NavLink to="/dashboard/admin">Admin</NavLink>
@@ -66,6 +61,9 @@ const DashboardSidebar = ({ children }) => {
             </li>
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/account">Account</NavLink>
+            </li>
+            <li className="bg-secondary mt-0.5">
+              <NavLink to="/dashboard/tuitions">Tuitions</NavLink>
             </li>
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/classes">Classes</NavLink>

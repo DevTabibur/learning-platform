@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import auth from "../../firebase/firebase.init";
 import "./Dashboard.css";
 
 const Settings = () => {
   const [user, loading, error] = useAuthState(auth);
-  console.log("user", user);
+  // console.log("user", user);
 
   // handling update form
   const {
@@ -17,30 +17,28 @@ const Settings = () => {
     formState: { errors },
   } = useForm();
   const [userUpdate, setUserUpdate] = useState([]);
+
   const onSubmit = async (data) => {
-    await setUserUpdate(data);
+    setUserUpdate(data);
     // console.log(data);
+    const email = user?.email;
+    console.log(email);
+    if (email) {
+      fetch(`http://localhost:5000/user/${email}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(userUpdate),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data inside of update", data);
+          alert("Data updated successfully");
+        });
+    }
   };
-
-  const displayName = "";
-  // send data in server
-  //   useEffect(()=>{
-  //     const url = `http://localhost:5000/user/${email}`
-  //     fetch(url,{
-  //       method: "POST",
-  //       headers:{
-  //         'content-type' : 'application/json',
-  //         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //       },
-  //       body: JSON.stringify(userUpdate),
-  //     })
-  //     .then(res => res.json())
-  //     // .then(data =>{
-  //     //   alert('Data updated successfully')
-  //     // })
-  //   }, [])
-
-  // console.log('userUpdate', userUpdate)
 
   return (
     <>
@@ -101,29 +99,32 @@ const Settings = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Type here"
+                    readOnly
+                    value={user?.displayName}
                     className="input input-bordered w-full max-w-xs"
-                    {...register("name", {
-                      required: {
-                        value: true,
-                        message: "Name is Required",
-                      },
-                      pattern: {
-                        value: /^[a-z ,.'-]+$/i,
-                        message: "Name is not valid",
-                      },
-                    })}
                   />
+                </div>
+
+                {/* religion */}
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">What is your religion?*</span>
+                  </label>
+                  <select
+                    className="input input-bordered w-full max-w-xs"
+                    {...register("religion", { required: true })}
+                  >
+                    <option value="islam">Islam</option>
+                    <option value="hindu">Hindu</option>
+                    <option value="christian">Christian</option>
+                    <option value="buddho">Buddho</option>
+                    <option value="others">Others</option>
+                  </select>
                   <label className="label">
                     <span className="label-text-alt">
-                      {errors.name?.type === "required" && (
+                      {errors.religion?.type === "required" && (
                         <span className="label-text-alt text-red-500">
-                          {errors.name.message}
-                        </span>
-                      )}
-                      {errors.name?.type === "pattern" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.name.message}
+                          Religion is required
                         </span>
                       )}
                     </span>
@@ -409,32 +410,8 @@ const Settings = () => {
                       readOnly
                       value={user?.email}
                       type="text"
-                      placeholder="email"
                       className="input input-bordered"
-                      // className="input input-bordered w-full max-w-xs"
-                      {...register("email", {
-                        required: {
-                          value: true,
-                          message: "Email is Required",
-                        },
-                        pattern: {
-                          value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                          message: "Provide a valid Email",
-                        },
-                      })}
                     />
-                    <label className="label my-1 py-0">
-                      {errors.email?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.email.message}
-                        </span>
-                      )}
-                      {errors.email?.type === "pattern" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.email.message}
-                        </span>
-                      )}
-                    </label>
                   </div>
 
                   {/* phone */}

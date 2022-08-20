@@ -3,13 +3,8 @@ import React, { useEffect, useState } from "react";
 const useUserDetails = (id) => {
   const [userDetails, setUserDetails] = useState([]);
   useEffect(() => {
-    const url = `http://localhost:5000/user/${id}`;
-    fetch(url, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    const url = `http://localhost:5000/userWithID/${id}`;
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setUserDetails(data);

@@ -11,6 +11,7 @@ import auth from "../../firebase/firebase.init";
 import Loader from "../../shared/Loader/Loader";
 import useToken from "../hooks/useToken";
 
+
 const Register = () => {
   const [
     createUserWithEmailAndPassword,

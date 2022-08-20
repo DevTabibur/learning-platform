@@ -12,6 +12,7 @@ import Settings from '../pages/Dashboard/Settings';
 import Students from '../pages/Dashboard/Students';
 import Subjects from '../pages/Dashboard/Subjects';
 import Teachers from '../pages/Dashboard/Teachers';
+import Tuitions from '../pages/Dashboard/Tuitions';
 
 export const publicRoutes = [
     {path:"/dashboard/parents", name:"Parents", Component: Parents},
@@ -25,4 +26,5 @@ export const publicRoutes = [
     {path:"/dashboard/exam", name:"Exam", Component: Exam},
     {path:"/dashboard/settings", name:"Settings", Component: Settings},
     {path:"/dashboard/profile", name:"Profile", Component: Profile},
+    {path:"/dashboard/tuitions", name:"Tuitions", Component: Tuitions},
 ]

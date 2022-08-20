@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
   Link,
@@ -14,8 +14,26 @@ import useToken from "../hooks/useToken";
 
 const Profile = () => {
   const [user, loading, error] = useAuthState(auth);
+  const [userInfo, setUserInfo] = useState([]);
+  const [dataLoad, setDataLoad] = useState(false);
 
-  console.log("user", user);
+  // filter with email data
+  const email = user?.email;
+  const url = `http://localhost:5000/userWithEmail/${email}`;
+
+  if (email) {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserInfo(data);
+      });
+  }
 
   // for loading
   if (loading) {
@@ -93,14 +111,43 @@ const Profile = () => {
                   <h2 className="card-title">Provide your Name</h2>
                 )}
 
-                <p>Bio</p>
+                {userInfo?.bio ? (
+                  <p>{userInfo?.bio}</p>
+                ) : (
+                  <p>Provide Bio Data</p>
+                )}
                 <hr className="px-0 mx-0 w-full my-3"></hr>
-                <p className="mb-0">
-                  <strong className="pr-1">Student ID:</strong>321000001
-                </p>
-                <p className="mb-0">
-                  <strong className="pr-1">Class / Section:</strong>4
-                </p>
+                {userInfo?.role ? (
+                  <p className="mb-0">
+                    <strong className="pr-1">Role:</strong>
+                    {userInfo?.role}
+                  </p>
+                ) : (
+                  <p className="mb-0">
+                    <strong className="pr-1">Role:</strong>Update your role
+                  </p>
+                )}
+                {userInfo?.id ? (
+                  <p className="mb-0">
+                    <strong className="pr-1">ID:</strong>
+                    {userInfo?.id}
+                  </p>
+                ) : (
+                  <p className="mb-0">
+                    <strong className="pr-1">ID:</strong>Update Your ID
+                  </p>
+                )}
+                {userInfo?.class ? (
+                  <p className="mb-0">
+                    <strong className="pr-1">Class / Section:</strong>
+                    {userInfo?.class}
+                  </p>
+                ) : (
+                  <p className="mb-0">
+                    <strong className="pr-1">Class / Section:</strong>Update
+                    Your class/ section
+                  </p>
+                )}
                 <div className="card-actions mt-4">
                   <Link className="btn btn-accent" to="/dashboard/settings">
                     Update Profile
@@ -118,10 +165,10 @@ const Profile = () => {
               <hr></hr>
               <div className="general-info-list">
                 <ul className="">
-                  {user?.displayName ? (
+                  {userInfo?.name ? (
                     <li className="flex my-2">
                       <strong>Name:</strong>
-                      <p className="ml-4">Tabibur Rahman</p>
+                      <p className="ml-4">{userInfo?.name}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -129,37 +176,87 @@ const Profile = () => {
                       <p className="ml-4">Update Your Name</p>
                     </li>
                   )}
-                  <li className="flex my-2">
-                    <strong>Father's Name:</strong>
-                    <p className="ml-4">Tabibur Rahman</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Mother's Name:</strong>
-                    <p className="ml-4">Tabibur Rahman</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Date of Birth:</strong>
-                    <p className="ml-4">18-04-2000</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Religion:</strong>
-                    <p className="ml-4">Islam</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Father Occupation:</strong>
-                    <p className="ml-4">Graphic Designer</p>
-                  </li>
+                  {userInfo?.fathersName ? (
+                    <li className="flex my-2">
+                      <strong>Father's Name:</strong>
+                      <p className="ml-4">{userInfo?.fathersName}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Father's Name:</strong>
+                      <p className="ml-4">Update Father's Name</p>
+                    </li>
+                  )}
+                  {userInfo?.mothersName ? (
+                    <li className="flex my-2">
+                      <strong>Mother's Name:</strong>
+                      <p className="ml-4">{userInfo?.mothersName}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Mother's Name:</strong>
+                      <p className="ml-4">Update Mother's Name</p>
+                    </li>
+                  )}
+                  {userInfo?.gender ? (
+                    <li className="flex my-2">
+                      <strong>Gender:</strong>
+                      <p className="ml-4">{userInfo?.gender}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Gender:</strong>
+                      <p className="ml-4">Update Your Gender</p>
+                    </li>
+                  )}
+                  {userInfo?.dob ? (
+                    <li className="flex my-2">
+                      <strong>Date of Birth:</strong>
+                      <p className="ml-4">{userInfo?.dob}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Date of Birth:</strong>
+                      <p className="ml-4">Update Date Of Birth</p>
+                    </li>
+                  )}
+                  {userInfo?.religion ? (
+                    <li className="flex my-2">
+                      <strong>Religion:</strong>
+                      <p className="ml-4">{userInfo?.religion}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Religion:</strong>
+                      <p className="ml-4">Update religion</p>
+                    </li>
+                  )}
+                  {userInfo?.occupation ? (
+                    <li className="flex my-2">
+                      <strong>Father's Occupation:</strong>
+                      <p className="ml-4">{userInfo?.occupation}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Father's Occupation:</strong>
+                      <p className="ml-4">Update Occupation</p>
+                    </li>
+                  )}
                   <li className="flex my-2">
                     <strong>E-mail:</strong>
                     <p className="ml-4">{user?.email}</p>
                   </li>
-                  {user?.phoneNumber ? (<li className="flex my-2">
-                    <strong>Phone:</strong>
-                    <p className="ml-4">{user?.phoneNumber}</p>
-                  </li>) : (<li className="flex my-2">
-                    <strong>Phone:</strong>
-                    <p className="ml-4">Update Phone Number</p>
-                  </li>)}
+                  {userInfo?.phone ? (
+                    <li className="flex my-2">
+                      <strong>Phone:</strong>
+                      <p className="ml-4">{userInfo?.phone}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Phone:</strong>
+                      <p className="ml-4">Update Phone Number</p>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>
