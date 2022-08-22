@@ -6,57 +6,52 @@ import useUserDetails from "../../pages/hooks/useUserDetails";
 import Loader from "../Loader/Loader";
 import "./UserDetails.css";
 import { useForm } from "react-hook-form";
+import useProfile from "../../pages/hooks/useProfileInfo";
+import Avatar from "../../assets/images/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png";
 
 const UserDetails = () => {
   const [user, loading, error] = useAuthState(auth);
 
-  const { displayName, photoURL, phoneNumber, _id, } = user;
   const { id } = useParams();
 
   const [userDetails] = useUserDetails(id);
   const { email } = userDetails;
 
-  // console.log(userDetails);
+  const [userProfileInfo] = useProfile();
 
-  // handling update form
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-  const [userUpdate, setUserUpdate] = useState([]);
-  const onSubmit = async (data) => {
-    await setUserUpdate(data);
-    // console.log(data);
+  // for loading
+  if (loading) {
+    return <Loader />;
+  }
+
+  // make admin function with API
+  const makeAdmin = () => {
+    const url = `http://localhost:5000/user/admin/${email}`;
+    fetch(url, {
+      method: 'PUT',
+      headers:{
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
+    })
+    .then(res=> res.json())
+    .then(data => {
+      console.log('inside data', data)
+    })
+
   };
 
-  // send data in server
-  useEffect(()=>{
-    const url = `http://localhost:5000/user/${email}`
-    fetch(url,{
-      method: "POST",
-      headers:{
-        'content-type' : 'application/json',
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(userUpdate),
-    })
-    .then(res => res.json())
-    // .then(data =>{
-    //   alert('Data updated successfully')
-    // })
-  }, [])
+  // make super admin function with API
+  const superAdmin = () => {
+    alert("superAdmin");
+  };
 
-
-  // console.log('userUpdate', userUpdate)
   return (
     <>
-      <h2 className="text-xl font-bold mb-1">Update User</h2>
+      <h2 className="text-xl font-bold mb-1 text-accent">User Details</h2>
       <div className="text-sm breadcrumbs mb-5">
         <ul>
-          <li>
-            <Link to="/">
+          <li className="font-bold text-accent font-sans">
+            <Link to="/dashboard">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -73,7 +68,7 @@ const UserDetails = () => {
               Home
             </Link>
           </li>
-          <li>
+          <li className="font-bold text-accent font-sans">
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -107,19 +102,69 @@ const UserDetails = () => {
             <div className="card-body items-left text-left relative">
               <div className="avatar online absolute -top-10 left-5">
                 <div className="w-24 rounded-full">
-                  <img src={photoURL} alt="Update Profile" />
+                  {user?.photoURL ? (
+                    <img src={user?.photoURL} alt="Update Profile" />
+                  ) : (
+                    <img src={Avatar} alt="Update Profile" />
+                  )}
                 </div>
               </div>
               <div className="mt-10">
-                <h2 className="card-title">{displayName}</h2>
-                <p>Bio</p>
+                {user?.displayName ? (
+                  <h2 className="card-title">{user?.displayName}</h2>
+                ) : (
+                  <h2 className="card-title">Provide your Name</h2>
+                )}
+
+                {userProfileInfo?.bio ? (
+                  <p>{userProfileInfo?.bio}</p>
+                ) : (
+                  <p>Provide Bio Data</p>
+                )}
                 <hr className="px-0 mx-0 w-full my-3"></hr>
-                <p className="mb-0">
-                  <strong className="pr-1">Student ID:</strong>321000001
-                </p>
-                <p className="mb-0">
-                  <strong className="pr-1">Class / Section:</strong>4
-                </p>
+                {userProfileInfo?.role ? (
+                  <p className="mb-0">
+                    <strong className="pr-1">Role:</strong>
+                    {userProfileInfo?.role}
+                  </p>
+                ) : (
+                  <p className="mb-0">
+                    <strong className="pr-1">Role:</strong>Update your role
+                  </p>
+                )}
+                {userProfileInfo?.id ? (
+                  <p className="mb-0">
+                    <strong className="pr-1">ID:</strong>
+                    {userProfileInfo?.id}
+                  </p>
+                ) : (
+                  <p className="mb-0">
+                    <strong className="pr-1">ID:</strong>Update Your ID
+                  </p>
+                )}
+                {userProfileInfo?.class ? (
+                  <p className="mb-0">
+                    <strong className="pr-1">Class / Section:</strong>
+                    {userProfileInfo?.class}
+                  </p>
+                ) : (
+                  <p className="mb-0">
+                    <strong className="pr-1">Class / Section:</strong>Update
+                    Your class/ section
+                  </p>
+                )}
+                <div className="card-actions mt-4">
+                  <button
+                    onClick={makeAdmin}
+                    className="btn btn-accent"
+                    to="/dashboard/settings"
+                  >
+                    Make Admin
+                  </button>
+                  <button onClick={superAdmin} className="btn btn-accent" to="/dashboard/settings">
+                    Make Super Admin
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -132,485 +177,100 @@ const UserDetails = () => {
               <hr></hr>
               <div className="general-info-list">
                 <ul className="">
-                  <li className="flex my-2">
-                    <strong>Name:</strong>
-                    <p className="ml-4">Tabibur Rahman</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Father's Name:</strong>
-                    <p className="ml-4">Tabibur Rahman</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Mother's Name:</strong>
-                    <p className="ml-4">Tabibur Rahman</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Date of Birth:</strong>
-                    <p className="ml-4">18-04-2000</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Religion:</strong>
-                    <p className="ml-4">Islam</p>
-                  </li>
-                  <li className="flex my-2">
-                    <strong>Father Occupation:</strong>
-                    <p className="ml-4">Graphic Designer</p>
-                  </li>
+                  {userProfileInfo?.name ? (
+                    <li className="flex my-2">
+                      <strong>Name:</strong>
+                      <p className="ml-4">{userProfileInfo?.name}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Name:</strong>
+                      <p className="ml-4">Update Your Name</p>
+                    </li>
+                  )}
+                  {userProfileInfo?.fathersName ? (
+                    <li className="flex my-2">
+                      <strong>Father's Name:</strong>
+                      <p className="ml-4">{userProfileInfo?.fathersName}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Father's Name:</strong>
+                      <p className="ml-4">Update Father's Name</p>
+                    </li>
+                  )}
+                  {userProfileInfo?.mothersName ? (
+                    <li className="flex my-2">
+                      <strong>Mother's Name:</strong>
+                      <p className="ml-4">{userProfileInfo?.mothersName}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Mother's Name:</strong>
+                      <p className="ml-4">Update Mother's Name</p>
+                    </li>
+                  )}
+                  {userProfileInfo?.gender ? (
+                    <li className="flex my-2">
+                      <strong>Gender:</strong>
+                      <p className="ml-4">{userProfileInfo?.gender}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Gender:</strong>
+                      <p className="ml-4">Update Your Gender</p>
+                    </li>
+                  )}
+                  {userProfileInfo?.dob ? (
+                    <li className="flex my-2">
+                      <strong>Date of Birth:</strong>
+                      <p className="ml-4">{userProfileInfo?.dob}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Date of Birth:</strong>
+                      <p className="ml-4">Update Date Of Birth</p>
+                    </li>
+                  )}
+                  {userProfileInfo?.religion ? (
+                    <li className="flex my-2">
+                      <strong>Religion:</strong>
+                      <p className="ml-4">{userProfileInfo?.religion}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Religion:</strong>
+                      <p className="ml-4">Update religion</p>
+                    </li>
+                  )}
+                  {userProfileInfo?.occupation ? (
+                    <li className="flex my-2">
+                      <strong>Father's Occupation:</strong>
+                      <p className="ml-4">{userProfileInfo?.occupation}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Father's Occupation:</strong>
+                      <p className="ml-4">Update Occupation</p>
+                    </li>
+                  )}
                   <li className="flex my-2">
                     <strong>E-mail:</strong>
-                    <p className="ml-4">{email}</p>
+                    <p className="ml-4">{user?.email}</p>
                   </li>
-                  <li className="flex my-2">
-                    <strong>Phone:</strong>
-                    <p className="ml-4">Not Provided</p>
-                  </li>
+                  {userProfileInfo?.phone ? (
+                    <li className="flex my-2">
+                      <strong>Phone:</strong>
+                      <p className="ml-4">{userProfileInfo?.phone}</p>
+                    </li>
+                  ) : (
+                    <li className="flex my-2">
+                      <strong>Phone:</strong>
+                      <p className="ml-4">Update Phone Number</p>
+                    </li>
+                  )}
                 </ul>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="md:flex flex-row mt-20  gap-x-6 gap-y-4">
-        <div className="basis-1/3">
-          <div className="card w-full bg-base-100 shadow">
-            <div className="card-body">
-              <h2 className="card-title justify-center items-center mb-3">
-                Update Profile
-              </h2>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                {/* name */}
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">What is your name?*</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
-                    {...register("name", {
-                      required: {
-                        value: true,
-                        message: "Name is Required",
-                      },
-                      pattern: {
-                        value: /^[a-z ,.'-]+$/i,
-                        message: "Name is not valid",
-                      },
-                    })}
-                  />
-                  <label className="label">
-                    <span className="label-text-alt">
-                      {errors.name?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.name.message}
-                        </span>
-                      )}
-                      {errors.name?.type === "pattern" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.name.message}
-                        </span>
-                      )}
-                    </span>
-                  </label>
-                </div>
-
-                {/* gender */}
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Select your Gender*</span>
-                  </label>
-                  <select
-                    className="input input-bordered w-full max-w-xs"
-                    {...register("gender", { required: true })}
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                  <label className="label">
-                    <span className="label-text-alt">
-                      {errors.gender?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          Gender is required
-                        </span>
-                      )}
-                    </span>
-                  </label>
-                </div>
-
-                {/* role */}
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Select your Role*</span>
-                  </label>
-                  <select
-                    className="input input-bordered w-full max-w-xs"
-                    {...register("role", { required: true })}
-                  >
-                    <option value="parents">Parents</option>
-                    <option value="teachers">Teachers</option>
-                    <option value="students">Students</option>
-                    <option value="admin">Admin</option>
-                    <option value="super-admin">Super Admin</option>
-                  </select>
-                  <label className="label">
-                    <span className="label-text-alt">
-                      {errors.role?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          Gender is required
-                        </span>
-                      )}
-                    </span>
-                  </label>
-                </div>
-
-                {/* Bio */}
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Tell us about yourself*</span>
-                  </label>
-                  <textarea
-                    type="text"
-                    placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
-                    {...register("bio", {
-                      required: true,
-                      maxLength: 300,
-                    })}
-                  />
-                  <label className="label">
-                    <span className="label-text-alt">
-                      {errors.bio?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          Bio is required
-                        </span>
-                      )}
-                      {errors.bio?.type === "maxLength" && (
-                        <span className="label-text-alt text-red-500">
-                          300 words only
-                        </span>
-                      )}
-                    </span>
-                  </label>
-                </div>
-
-                {/* cover photo */}
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Upload Your Cover Photo</span>
-                  </label>
-                  <input
-                    type="file"
-                    placeholder="Upload here"
-                    className="input input-bordered w-full max-w-xs"
-                    {...register("cover")}
-                  />
-                </div>
-
-                {/* profile photo */}
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text">Upload Your Profile Photo*</span>
-                  </label>
-                  <input
-                    type="file"
-                    placeholder="Upload here"
-                    className="input input-bordered w-full max-w-xs"
-                    {...register("profile", {
-                      required: true,
-                    })}
-                  />
-                  <label className="label">
-                    <span className="label-text-alt">
-                      {errors.profile?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          Profile pictures is required
-                        </span>
-                      )}
-                    </span>
-                  </label>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div className="basis-2/3">
-          <div className="card w-full bg-base-100 shadow">
-            <div className="card-body">
-              <h2 className="card-title justify-center items-center mb-3">
-                Update General Info
-              </h2>
-
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="md:flex gap-8 justify-center items-center">
-                  {/* fathers name */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">
-                        What is your father's name?*
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Father's Name"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("fathersName", {
-                        required: {
-                          value: true,
-                          message: "Father's Name is Required",
-                        },
-                        pattern: {
-                          value: /^[a-z ,.'-]+$/i,
-                          message: "Name is not valid",
-                        },
-                      })}
-                    />
-                    <label className="label">
-                      <span className="label-text-alt">
-                        {errors.fathersName?.type === "required" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.fathersName.message}
-                          </span>
-                        )}
-                        {errors.fathersName?.type === "pattern" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.fathersName.message}
-                          </span>
-                        )}
-                      </span>
-                    </label>
-                  </div>
-
-                  {/* mothers name */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">
-                        What is your mothers's name?*
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="mothers's Name"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("mothersName", {
-                        required: {
-                          value: true,
-                          message: "Mother's Name is Required",
-                        },
-                        pattern: {
-                          value: /^[a-z ,.'-]+$/i,
-                          message: "Name is not valid",
-                        },
-                      })}
-                    />
-                    <label className="label">
-                      <span className="label-text-alt">
-                        {errors.mothersName?.type === "required" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.mothersName.message}
-                          </span>
-                        )}
-                        {errors.mothersName?.type === "pattern" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.mothersName.message}
-                          </span>
-                        )}
-                      </span>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="md:flex gap-8 justify-center items-center">
-                  {/* date of birth */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">
-                        What is your date of birth?*
-                      </span>
-                    </label>
-                    <input
-                      type="date"
-                      placeholder="DOB"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("dob", {
-                        required: {
-                          value: true,
-                          message: "DOB is Required",
-                        },
-                      })}
-                    />
-                    <label className="label">
-                      <span className="label-text-alt">
-                        {errors.dob?.type === "required" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.dob.message}
-                          </span>
-                        )}
-                      </span>
-                    </label>
-                  </div>
-
-                  {/* father occupation */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">
-                        What is Father Occupation?*
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Father Occupation"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("occupation", {
-                        required: {
-                          value: true,
-                          message: "Occupation is Required",
-                        },
-                      })}
-                    />
-                    <label className="label">
-                      <span className="label-text-alt">
-                        {errors.occupation?.type === "required" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.occupation.message}
-                          </span>
-                        )}
-                      </span>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="md:flex gap-8 justify-center items-center">
-                  {/* Email */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">Email*</span>
-                    </label>
-                    <input
-                    readOnly
-                    value={user?.email}
-                      type="text"
-                      placeholder="email"
-                      className="input input-bordered"
-                      // className="input input-bordered w-full max-w-xs"
-                      {...register("email", {
-                        required: {
-                          value: true,
-                          message: "Email is Required",
-                        },
-                        pattern: {
-                          value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                          message: "Provide a valid Email",
-                        },
-                      })}
-                    />
-                    <label className="label my-1 py-0">
-                      {errors.email?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.email.message}
-                        </span>
-                      )}
-                      {errors.email?.type === "pattern" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.email.message}
-                        </span>
-                      )}
-                    </label>
-                  </div>
-
-                  {/* phone */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">Phone*</span>
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="phone"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("phone", {
-                        required: {
-                          value: true,
-                          message: "Phone Number is Required",
-                        },
-                        pattern: {
-                          // value: ,
-                          message: "Phone is required",
-                        },
-                      })}
-                    />
-                    <label className="label">
-                      <span className="label-text-alt">
-                        {errors.phone?.type === "required" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.phone.message}
-                          </span>
-                        )}
-                        {errors.phone?.type === "pattern" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.phone.message}
-                          </span>
-                        )}
-                      </span>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="md:flex gap-8 justify-center items-center">
-                  {/* student ID */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">
-                        Student/Teacher/Parents ID?*
-                      </span>
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="ID"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("id", {
-                        required: {
-                          value: true,
-                          message: "ID is Required",
-                        },
-                      })}
-                    />
-                    <label className="label">
-                      <span className="label-text-alt">
-                        {errors.id?.type === "required" && (
-                          <span className="label-text-alt text-red-500">
-                            {errors.id.message}
-                          </span>
-                        )}
-                      </span>
-                    </label>
-                  </div>
-
-                  {/* Class */}
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text">
-                        Class/Section (only student fill this)
-                      </span>
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="Class / Section"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("class")}
-                    />
-                  </div>
-                </div>
-
-                <div className="md:flex gap-8 justify-center items-center">
-                  <input
-                    className="btn btn-accent mt-10 w-full"
-                    type="submit"
-                    value="UPDATE"
-                  />
-                </div>
-              </form>
             </div>
           </div>
         </div>
