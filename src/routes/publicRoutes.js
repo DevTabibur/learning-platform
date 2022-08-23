@@ -12,7 +12,7 @@ import Settings from '../pages/Dashboard/Settings';
 import Students from '../pages/Dashboard/Students';
 import Subjects from '../pages/Dashboard/Subjects';
 import Teachers from '../pages/Dashboard/Teachers';
-import Tuitions from '../pages/Dashboard/Tuitions';
+import Tuitions from '../pages/Tuitions/Tuitions';
 
 export const publicRoutes = [
     {path:"/dashboard/parents", name:"Parents", Component: Parents},
