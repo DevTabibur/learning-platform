@@ -60,6 +60,9 @@ const DashboardSidebar = ({ children }) => {
               <NavLink to="/dashboard/library">Library</NavLink>
             </li>
             <li className="bg-secondary mt-0.5">
+              <NavLink to="/dashboard/message">Message</NavLink>
+            </li>
+            <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/account">Account</NavLink>
             </li>
             <li className="bg-secondary mt-0.5">

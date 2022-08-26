@@ -3,6 +3,7 @@ import {Link, Route, Routes} from 'react-router-dom';
 import Account from '../pages/Dashboard/Account';
 import Attendance from '../pages/Dashboard/Attendance';
 import Classes from '../pages/Dashboard/Classes';
+import Dashboard from '../pages/Dashboard/Dashboard';
 import Exam from '../pages/Dashboard/Exam';
 import Library from '../pages/Dashboard/Library';
 import Parents from '../pages/Dashboard/Parents';

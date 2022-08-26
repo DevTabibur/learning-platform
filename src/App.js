@@ -11,7 +11,6 @@ import { publicRoutes as nestedAndPublicRoutes } from "./routes/publicRoutes";
 import privateRoute from "./routes/privateRoute";
 
 function App() {
-  
   return (
     <>
       <Header>
@@ -37,9 +36,6 @@ function App() {
               ))}
             </Route>
           </Route>
-
-
-
         </Routes>
       </Header>
     </>

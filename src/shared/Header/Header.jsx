@@ -4,6 +4,11 @@ import "./Header.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase/firebase.init";
 import { signOut } from "firebase/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBell,
+  faEnvelopeOpenText,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Header = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
@@ -11,7 +16,7 @@ const Header = ({ children }) => {
   // for logout
   const logOut = () => {
     signOut(auth);
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("accessToken");
   };
 
   return (
@@ -44,8 +49,63 @@ const Header = ({ children }) => {
               <Link to="/dashboard"> E-Learning</Link>
             </div>
 
-            {/* profile / admin */}
+            {/* messages icon */}
+            <div className="dropdown dropdown-end hidden md:block mr-4">
+              <label tabIndex="0" className="m-1">
+                {/* <div class="badge badge-xs"></div> */}
+                <div className="indicator mt-0 pt-0">
+                  <FontAwesomeIcon
+                    className="text-2xl mt-1"
+                    icon={faEnvelopeOpenText}
+                  />
 
+                  <span className="badge badge-sm bg-primary border-none indicator-item -mt-1 lowercase">
+                    5
+                  </span>
+                </div>
+              </label>
+              <ul
+                tabIndex="0"
+                className="menu dropdown-content  p-2 shadow bg-accent rounded-box w-52 mt-5"
+              >
+                <li>
+                  <a>Item 1</a>
+                </li>
+                <li>
+                  <a>Item 2</a>
+                </li>
+              </ul>
+            </div>
+
+            {/* notification / notice icon */}
+            <div className="dropdown dropdown-end hidden md:block mr-14">
+              <label tabIndex="0" className="m-1">
+                {/* <div class="badge badge-xs"></div> */}
+                <div className="indicator mt-0 pt-0">
+                  <FontAwesomeIcon
+                    className="text-2xl mt-1"
+                    icon={faBell}
+                  />
+
+                  <span className="badge badge-sm bg-primary border-none indicator-item -mt-1 lowercase">
+                    5
+                  </span>
+                </div>
+              </label>
+              <ul
+                tabIndex="0"
+                className="menu dropdown-content  p-2 shadow bg-accent rounded-box w-52 mt-5"
+              >
+                <li>
+                  <a>Item 1</a>
+                </li>
+                <li>
+                  <a>Item 2</a>
+                </li>
+              </ul>
+            </div>
+
+            {/* profile / admin */}
             {user ? (
               <div className="dropdown dropdown-end">
                 <div className="flex">
@@ -75,7 +135,10 @@ const Header = ({ children }) => {
                   className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-accent rounded-box w-52"
                 >
                   <li>
-                    <NavLink to="/dashboard/profile" className="justify-between">
+                    <NavLink
+                      to="/dashboard/profile"
+                      className="justify-between"
+                    >
                       Profile
                       <span className="badge">New</span>
                     </NavLink>
