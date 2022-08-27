@@ -9,6 +9,7 @@ import Register from "./pages/Register/Register";
 import RequireAuth from "./authentication/RequireAuth";
 import { publicRoutes as nestedAndPublicRoutes } from "./routes/publicRoutes";
 import privateRoute from "./routes/privateRoute";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           {/* Dashboard login and registered component is not a nested route under dashboard */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound/>} />
 
           {/* private routes with nested element*/}
 

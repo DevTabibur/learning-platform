@@ -2,7 +2,6 @@ import React from 'react'
 import {Link, Route, Routes} from 'react-router-dom';
 import Account from '../pages/Dashboard/Account';
 import Attendance from '../pages/Dashboard/Attendance';
-import Classes from '../pages/Dashboard/Classes';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Exam from '../pages/Dashboard/Exam';
 import Library from '../pages/Dashboard/Library';
@@ -19,7 +18,6 @@ export const publicRoutes = [
     {path:"/dashboard/teachers", name:"Teachers", Component: Teachers},
     {path:"/dashboard/students", name:"Students", Component: Students},
     {path:"/dashboard/library", name:"Library", Component: Library},
-    {path:"/dashboard/classes", name:"Classes", Component: Classes},
     {path:"/dashboard/subjects", name:"Subjects", Component: Subjects},
     {path:"/dashboard/attendance", name:"Attendance", Component: Attendance},
     {path:"/dashboard/exam", name:"Exam", Component: Exam},

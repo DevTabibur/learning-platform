@@ -9,3 +9,4 @@
 8. react query
 9. axios
 10. react day picker
+11. sweet alert 2
