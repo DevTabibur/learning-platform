@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useSubjects from "../hooks/useSubjects";
@@ -6,11 +6,14 @@ import useAdmin from "../hooks/useAdmin";
 import useTeacher from "../hooks/useTeacher";
 import useLoadLibrary from "../hooks/useLoadLibrary";
 import Swal from "sweetalert2";
+import ModalOfBookdetails from "./ModalOfBookdetails";
 
 const Library = () => {
   const [teacher] = useTeacher();
-  console.log("teacher", teacher);
+  // console.log("teacher", teacher);
   const [libraryBooks] = useLoadLibrary();
+
+  const [bookDetailsModal, setBookDetailsModal] = useState(null);
 
   const {
     register,
@@ -106,129 +109,132 @@ const Library = () => {
                 </h2>
                 {teacher && (
                   <>
-                  <h2 className="text-xl font-serif text-accent">
-                  Add new books in library
-                </h2>
-                <form className="" onSubmit={handleSubmit(onSubmit)}>
-                  {/* ID */}
-                  <div className="form-control  ">
-                    <label className="label">
-                      <span className="label-text font-mono">ID</span>
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="ID No"
-                      className="input input-bordered  my-1"
-                      {...register("idNo", {
-                        required: {
-                          value: true,
-                          message: "Id is required",
-                        },
-                      })}
-                    />
-                    <label className="label my-2 py-0">
-                      {errors.idNo?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.idNo.message}
-                        </span>
-                      )}
-                    </label>
-                  </div>
+                    <h2 className="text-xl font-serif text-accent">
+                      Add new books in library
+                    </h2>
+                    <form className="" onSubmit={handleSubmit(onSubmit)}>
+                      {/* ID */}
+                      <div className="form-control  ">
+                        <label className="label">
+                          <span className="label-text font-mono">ID</span>
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="ID No"
+                          className="input input-bordered  my-1"
+                          {...register("idNo", {
+                            required: {
+                              value: true,
+                              message: "Id is required",
+                            },
+                          })}
+                        />
+                        <label className="label my-2 py-0">
+                          {errors.idNo?.type === "required" && (
+                            <span className="label-text-alt text-red-500">
+                              {errors.idNo.message}
+                            </span>
+                          )}
+                        </label>
+                      </div>
 
-                  {/* book name */}
-                  <div className="form-control  w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text font-mono">Book Name*</span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Book Name"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("bookName", {
-                        required: {
-                          value: true,
-                          message: "Book Name is Required",
-                        },
-                        pattern: {
-                          value: /^[a-zA-Z0-9 ]*$/,
-                          message: "Alphabetical Characters Only",
-                        },
-                      })}
-                    />
-                    <label className="label my-2 py-0">
-                      {errors.bookName?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.bookName.message}
-                        </span>
-                      )}
-                      {errors.bookName?.type === "pattern" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.bookName.message}
-                        </span>
-                      )}
-                    </label>
-                  </div>
+                      {/* book name */}
+                      <div className="form-control  w-full max-w-xs">
+                        <label className="label">
+                          <span className="label-text font-mono">
+                            Book Name*
+                          </span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Book Name"
+                          className="input input-bordered w-full max-w-xs"
+                          {...register("bookName", {
+                            required: {
+                              value: true,
+                              message: "Book Name is Required",
+                            },
+                            pattern: {
+                              value: /^[a-zA-Z0-9 ]*$/,
+                              message: "Alphabetical Characters Only",
+                            },
+                          })}
+                        />
+                        <label className="label my-2 py-0">
+                          {errors.bookName?.type === "required" && (
+                            <span className="label-text-alt text-red-500">
+                              {errors.bookName.message}
+                            </span>
+                          )}
+                          {errors.bookName?.type === "pattern" && (
+                            <span className="label-text-alt text-red-500">
+                              {errors.bookName.message}
+                            </span>
+                          )}
+                        </label>
+                      </div>
 
-                  {/* writer name */}
-                  <div className="form-control  w-full max-w-xs">
-                    <label className="label">
-                      <span className="label-text font-mono">Writer Name*</span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="(No Space)"
-                      className="input input-bordered w-full max-w-xs"
-                      {...register("writerName", {
-                        required: {
-                          value: true,
-                          message: "Writer Name is Required",
-                        },
-                        pattern: {
-                          value: /^[a-zA-Z0-9 ]*$/,
-                          message: "Alphabetical Characters Only",
-                        },
-                      })}
-                    />
-                    <label className="label my-2 py-0">
-                      {errors.writerName?.type === "required" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.writerName.message}
-                        </span>
-                      )}
-                      {errors.writerName?.type === "pattern" && (
-                        <span className="label-text-alt text-red-500">
-                          {errors.writerName.message}
-                        </span>
-                      )}
-                    </label>
-                  </div>
+                      {/* writer name */}
+                      <div className="form-control  w-full max-w-xs">
+                        <label className="label">
+                          <span className="label-text font-mono">
+                            Writer Name*
+                          </span>
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Type here"
+                          className="input input-bordered w-full max-w-xs"
+                          {...register("writerName", {
+                            required: {
+                              value: true,
+                              message: "Writer Name is Required",
+                            },
+                            pattern: {
+                              value: /^[a-zA-Z0-9 ]*$/,
+                              message: "Alphabetical Characters Only",
+                            },
+                          })}
+                        />
+                        <label className="label my-2 py-0">
+                          {errors.writerName?.type === "required" && (
+                            <span className="label-text-alt text-red-500">
+                              {errors.writerName.message}
+                            </span>
+                          )}
+                          {errors.writerName?.type === "pattern" && (
+                            <span className="label-text-alt text-red-500">
+                              {errors.writerName.message}
+                            </span>
+                          )}
+                        </label>
+                      </div>
 
-                  {/* upload date */}
-                  <div className="form-control  ">
-                    <label className="label">
-                      <span className="text-xl">Upload</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={formattedToday}
-                      readOnly
-                      placeholder="Type here"
-                      className="input input-bordered  my-1"
-                      {...register("uploadDate")}
-                    />
-                  </div>
+                      {/* upload date */}
+                      <div className="form-control  ">
+                        <label className="label">
+                          <span className="text-xl">Upload</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={formattedToday}
+                          readOnly
+                          placeholder="Type here"
+                          className="input input-bordered  my-1"
+                          {...register("uploadDate")}
+                        />
+                      </div>
 
-                  <div className="form-control  w-full max-w-xs">
-                    <input
-                      type="submit"
-                      value="ADD SUBJECTS"
-                      className="btn btn-secondary mt-3"
-                    />
-                  </div>
-                </form>
+                      <div className="form-control  w-full max-w-xs">
+                        <input
+                          type="submit"
+                          value="ADD SUBJECTS"
+                          className="btn btn-secondary mt-3"
+                        />
+                      </div>
+                    </form>
                   </>
                 )}
-                
               </div>
             </div>
           </div>
@@ -249,9 +255,14 @@ const Library = () => {
                     </thead>
                     <tbody>
                       {libraryBooks.map((book, idx) => (
-                        <ShowLibraryList key={idx} book={book} />
+                        <ShowLibraryList
+                          key={idx}
+                          book={book}
+                          setBookDetailsModal={setBookDetailsModal}
+                        />
                       ))}
                     </tbody>
+
                     {/* <!-- foot --> */}
                     <tfoot>
                       <tr>
@@ -269,14 +280,21 @@ const Library = () => {
           </div>
         </>
       </div>
+      {bookDetailsModal && (
+        <ModalOfBookdetails
+          key={1}
+          bookDetailsModal={bookDetailsModal}
+          setBookDetailsModal={setBookDetailsModal}
+        />
+      )}
     </>
   );
 };
 
 export default Library;
 
-const ShowLibraryList = ({ book }) => {
-  const { idNo, bookName, writerName, uploadDate } = book;
+const ShowLibraryList = ({ book, setBookDetailsModal, bookDetailsModal }) => {
+  const { _id, idNo, bookName, writerName, uploadDate } = book;
   return (
     <>
       <tr>
@@ -285,9 +303,18 @@ const ShowLibraryList = ({ book }) => {
         <td>{writerName}</td>
         <td>{uploadDate}</td>
         <td>
-          <button className="btn btn-sm btn-accent">Details</button>
+          <button
+            onClick={() => setBookDetailsModal(book)}
+            className="btn btn-sm btn-accent"
+          >
+            <label htmlFor="books-details">Details</label>
+          </button>
         </td>
       </tr>
+
+      {/* <!-- The button to open modal --> */}
+
+      {/* <!-- Put this part before </body> tag --> */}
     </>
   );
 };

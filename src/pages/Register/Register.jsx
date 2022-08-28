@@ -86,10 +86,19 @@ const Register = () => {
                       value: true,
                       message: "Name is Required",
                     },
+                    pattern:{
+                      value: /^[a-zA-Z0-9 ]*$/,
+                      message: "Name should be unique"
+                    }
                   })}
                 />
                 <label className="label my-1 py-0">
                   {errors.name?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.name.message}
+                    </span>
+                  )}
+                  {errors.name?.type === "pattern" && (
                     <span className="label-text-alt text-red-500">
                       {errors.name.message}
                     </span>
