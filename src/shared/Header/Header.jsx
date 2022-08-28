@@ -46,7 +46,7 @@ const Header = ({ children }) => {
               </svg>
             </label>
             <div className="flex-1 text-xl font-medium text-white">
-              <Link to="/dashboard"> E-Learning</Link>
+              <Link to="/"> E-Learning</Link>
             </div>
 
             {/* messages icon */}

@@ -24,32 +24,11 @@ const DashboardSidebar = ({ children }) => {
                 <li className="mt-0.5">
                   <NavLink to="/dashboard/admin">Admin</NavLink>
                 </li>
-                <li className="mt-0.5">
-                  <NavLink to="/dashboard/teachers">Teachers</NavLink>
-                </li>
-                <li className="mt-0.5 ">
-                  <NavLink to="/dashboard/parents">Parents</NavLink>
-                </li>
-                <li className="mt-0.5 ">
-                  <NavLink to="/dashboard/students">Students</NavLink>
-                </li>
                 <li className="mt-0.5 ">
                   <NavLink to="/dashboard/users">Users</NavLink>
                 </li>
               </div>
             </div>
-
-            <li className="bg-secondary mt-0.5 inline-block">
-              <NavLink to="/dashboard/parents">Parents</NavLink>
-            </li>
-
-            <li className="bg-secondary mt-0.5">
-              <NavLink to="/dashboard/teachers">Teachers</NavLink>
-            </li>
-
-            <li className="bg-secondary mt-0.5">
-              <NavLink to="/dashboard/students">Students</NavLink>
-            </li>
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/library">Library</NavLink>
             </li>
@@ -61,9 +40,6 @@ const DashboardSidebar = ({ children }) => {
             </li>
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/tuitions">Tuitions</NavLink>
-            </li>
-            <li className="bg-secondary mt-0.5">
-              <NavLink to="/dashboard/classes">Classes</NavLink>
             </li>
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/subjects">Subjects</NavLink>

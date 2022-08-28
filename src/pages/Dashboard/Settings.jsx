@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
 import auth from "../../firebase/firebase.init";
 import "./Dashboard.css";
+import Swal from 'sweetalert2'
 
 const Settings = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -18,7 +19,7 @@ const Settings = () => {
   } = useForm();
   const [userUpdate, setUserUpdate] = useState([]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, e) => {
     setUserUpdate(data);
     // console.log(data);
     const email = user?.email;
@@ -34,8 +35,12 @@ const Settings = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("data inside of update", data);
-          alert("Data updated successfully");
+          Swal.fire({
+            title: 'Data updated successfully',
+            text: 'Do you want to continue',
+            icon: 'success',
+            confirmButtonText: 'Done'
+          })
         });
     }
   };

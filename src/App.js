@@ -26,6 +26,7 @@ function App() {
 
           {/* Dashboard login and registered component is not a nested route under dashboard */}
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound/>} />
 
