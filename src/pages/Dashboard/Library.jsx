@@ -104,7 +104,9 @@ const Library = () => {
                 <h2 className="text-xl font-serif text-accent">
                   Welcome to E-Learning Library
                 </h2>
-                <h2 className="text-xl font-serif text-accent">
+                {teacher && (
+                  <>
+                  <h2 className="text-xl font-serif text-accent">
                   Add new books in library
                 </h2>
                 <form className="" onSubmit={handleSubmit(onSubmit)}>
@@ -224,6 +226,9 @@ const Library = () => {
                     />
                   </div>
                 </form>
+                  </>
+                )}
+                
               </div>
             </div>
           </div>
