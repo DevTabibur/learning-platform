@@ -150,7 +150,7 @@ const Library = () => {
                           message: "Book Name is Required",
                         },
                         pattern: {
-                          value: /^[A-Z]+$/i,
+                          value: /^[a-zA-Z0-9 ]*$/,
                           message: "Alphabetical Characters Only",
                         },
                       })}
@@ -184,7 +184,7 @@ const Library = () => {
                           message: "Writer Name is Required",
                         },
                         pattern: {
-                          value: /^[A-Z]+$/i,
+                          value: /^[a-zA-Z0-9 ]*$/,
                           message: "Alphabetical Characters Only",
                         },
                       })}

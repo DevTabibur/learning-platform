@@ -10,7 +10,7 @@ const useLoadLibrary = () => {
             // console.log('inside use library hooks data', data);
             setLibraryBooks(data)
         })
-    }, [])
+    }, [libraryBooks])
   return [libraryBooks]
 }
 
