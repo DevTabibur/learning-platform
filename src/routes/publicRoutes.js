@@ -10,7 +10,6 @@ import Tuitions from '../pages/Tuitions/Tuitions';
 
 export const publicRoutes = [
     {path:"/dashboard/library", name:"Library", Component: Library},
-    {path:"/dashboard/library", name:"Library", Component: Library},
     {path:"/dashboard/subjects", name:"Subjects", Component: Subjects},
     {path:"/dashboard/attendance", name:"Attendance", Component: Attendance},
     {path:"/dashboard/exam", name:"Exam", Component: Exam},

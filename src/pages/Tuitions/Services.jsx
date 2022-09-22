@@ -3,6 +3,7 @@ import React from "react";
 const Services = ({ service, setAppointment }) => {
   const { name, slots } = service;
 
+
   return (
     <div className="card lg:max-w-lg bg-base-100 shadow-xl">
       <div className="card-body text-center">
@@ -20,7 +21,7 @@ const Services = ({ service, setAppointment }) => {
         <div className="card-actions justify-center">
           <label
             htmlFor="booking-modal"
-            disabled={slots.length === 0}
+            disabled={slots?.length === 0}
             onClick={() => setAppointment(service)}
             className="btn uppercase btn-secondary border-none"
           >

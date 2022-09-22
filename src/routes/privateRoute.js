@@ -14,4 +14,4 @@ export const privateRoute = [
     {path:"/dashboard/users/:id", name: Users, Component: UserDetails},
 ]
 
-export default privateRoute
+export default privateRoute;
