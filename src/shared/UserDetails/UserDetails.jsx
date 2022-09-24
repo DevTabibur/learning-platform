@@ -9,9 +9,12 @@ import { useForm } from "react-hook-form";
 import useProfile from "../../pages/hooks/useProfileInfo";
 import Avatar from "../../assets/images/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png";
 import Swal from "sweetalert2";
+import useAdmin from "../../pages/hooks/useAdmin";
 
 const UserDetails = () => {
   const [user, loading, error] = useAuthState(auth);
+  const [admin] = useAdmin(user);
+  console.log('admiin user details compo', admin)
 
   const { id } = useParams();
 
@@ -44,7 +47,6 @@ const UserDetails = () => {
         return res.json();
       })
       .then((data) => {
-        console.log('code', data.code)
         if (data.code === 200) {
           Swal.fire({
             title: "Made an Admin Successfully",
@@ -55,8 +57,26 @@ const UserDetails = () => {
   };
 
   // make super admin function with API
-  const removeUser = () => {
-    alert("removeUser");
+  const removeUser = (id) => {
+    const proceed = window.confirm("Are you want to remove this user?");
+    if (proceed) {
+      const url = `http://localhost:5000/user/${id}`;
+      fetch(url, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount) {
+            Swal.fire({
+              title: "Remove user Successfully",
+              icon: "success",
+            });
+          }
+        });
+    }
   };
 
   return (
@@ -176,7 +196,7 @@ const UserDetails = () => {
                     Make Admin
                   </button>
                   <button
-                    onClick={removeUser}
+                    onClick={() => removeUser(id)}
                     className="btn btn-accent"
                     to="/dashboard/settings"
                   >
