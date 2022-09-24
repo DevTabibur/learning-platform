@@ -8,6 +8,7 @@ import "./UserDetails.css";
 import { useForm } from "react-hook-form";
 import useProfile from "../../pages/hooks/useProfileInfo";
 import Avatar from "../../assets/images/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png";
+import Swal from "sweetalert2";
 
 const UserDetails = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -28,21 +29,34 @@ const UserDetails = () => {
   const makeAdmin = () => {
     const url = `http://localhost:5000/user/admin/${email}`;
     fetch(url, {
-      method: 'PUT',
-      headers:{
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`
-      }
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-    .then(res=> res.json())
-    .then(data => {
-      console.log('inside data', data)
-    })
-
+      .then((res) => {
+        if (res.status === 403) {
+          Swal.fire({
+            title: "Failed to make Admin",
+            icon: "error",
+          });
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log('code', data.code)
+        if (data.code === 200) {
+          Swal.fire({
+            title: "Made an Admin Successfully",
+            icon: "success",
+          });
+        }
+      });
   };
 
   // make super admin function with API
-  const superAdmin = () => {
-    alert("superAdmin");
+  const removeUser = () => {
+    alert("removeUser");
   };
 
   return (
@@ -161,8 +175,12 @@ const UserDetails = () => {
                   >
                     Make Admin
                   </button>
-                  <button onClick={superAdmin} className="btn btn-accent" to="/dashboard/settings">
-                    Make Super Admin
+                  <button
+                    onClick={removeUser}
+                    className="btn btn-accent"
+                    to="/dashboard/settings"
+                  >
+                    Remove User
                   </button>
                 </div>
               </div>

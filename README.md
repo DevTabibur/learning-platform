@@ -10,3 +10,7 @@
 9. axios
 10. react day picker
 11. sweet alert 2
+
+
+## Description
+E-Learning site has two type of implementation. Admin and user(students/teachers/parents) etc dashboard. Admin can control whole site. Students can booking for tuitions, according their needed subject and their free times. User must have to login for taking services. User also can update their profile. Admin can see students admission progress, how many students are in, attendance of students, billing of students and many more. This site is designed by taking idea from google. It's designed by tailwind. user can toggle data theme, night mode and light mode also enabled. Admin can make another user an Admin.
