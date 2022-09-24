@@ -2,8 +2,13 @@ import React, { Children } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./DashboardSidebar.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase/firebase.init";
+import useAdmin from "../../pages/hooks/useAdmin";
 
 const DashboardSidebar = ({ children }) => {
+  const [user] = useAuthState(auth);
+  const [admin] = useAdmin(user);
   return (
     <>
       <div className="drawer drawer-mobile">
@@ -17,21 +22,26 @@ const DashboardSidebar = ({ children }) => {
           <ul className="menu w-52 bg-accent rounded text-white">
             {/* <!-- Sidebar content here --> */}
 
-            <div className="collapse collapse-arrow bg-secondary">
-              <input type="checkbox" className="peer" />
-              <div className="collapse-title font-medium">Dashboard</div>
-              <div className="collapse-content peer-checked:bg-accent">
-                <li className="mt-0.5">
-                  <NavLink to="/dashboard/admin">Admin</NavLink>
-                </li>
-                <li className="mt-0.5 ">
-                  <NavLink to="/dashboard/users">Users</NavLink>
-                </li>
-                <li className="mt-0.5 ">
-                  <NavLink to="/dashboard/bookings">Bookings</NavLink>
-                </li>
+            {admin && (
+              <div className="collapse collapse-arrow bg-secondary">
+                <input type="checkbox" className="peer" />
+                <div className="collapse-title font-medium">Dashboard</div>
+                <div className="collapse-content peer-checked:bg-accent">
+                  <li className="mt-0.5">
+                    <NavLink to="/dashboard/admin">Admin</NavLink>
+                  </li>
+                  <li className="mt-0.5 ">
+                    <NavLink to="/dashboard/users">Users</NavLink>
+                  </li>
+                  <li className="mt-0.5 ">
+                    <NavLink to="/dashboard/bookings">Bookings</NavLink>
+                  </li>
+                </div>
               </div>
-            </div>
+            )}
+            <li className="bg-secondary  ">
+              <NavLink to="/dashboard/tuitions">Tuitions</NavLink>
+            </li>
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/library">Library</NavLink>
             </li>
@@ -41,9 +51,7 @@ const DashboardSidebar = ({ children }) => {
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/account">Account</NavLink>
             </li>
-            <li className="bg-secondary mt-0.5">
-              <NavLink to="/dashboard/tuitions">Tuitions</NavLink>
-            </li>
+
             <li className="bg-secondary mt-0.5">
               <NavLink to="/dashboard/subjects">Subjects</NavLink>
             </li>

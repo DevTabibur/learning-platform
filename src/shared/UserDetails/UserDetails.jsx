@@ -14,7 +14,7 @@ import useAdmin from "../../pages/hooks/useAdmin";
 const UserDetails = () => {
   const [user, loading, error] = useAuthState(auth);
   const [admin] = useAdmin(user);
-  console.log('admiin user details compo', admin)
+  console.log("admiin user details compo", admin);
 
   const { id } = useParams();
 
@@ -77,6 +77,13 @@ const UserDetails = () => {
           }
         });
     }
+  };
+
+  const alreadyAdmin = () => {
+    Swal.fire({
+      title: "Congratulations Your'e already an Admin",
+      icon: "success",
+    });
   };
 
   return (
@@ -188,20 +195,33 @@ const UserDetails = () => {
                   </p>
                 )}
                 <div className="card-actions mt-4">
-                  <button
-                    onClick={makeAdmin}
-                    className="btn btn-accent"
-                    to="/dashboard/settings"
-                  >
-                    Make Admin
-                  </button>
-                  <button
-                    onClick={() => removeUser(id)}
-                    className="btn btn-accent"
-                    to="/dashboard/settings"
-                  >
-                    Remove User
-                  </button>
+                  {admin ? (
+                    <button
+                      onClick={alreadyAdmin}
+                      className="btn btn-accent"
+                      to="/dashboard/settings"
+                    >
+                      Already Admin
+                    </button>
+                  ) : (
+                    <button
+                      onClick={makeAdmin}
+                      className="btn btn-accent"
+                      to="/dashboard/settings"
+                    >
+                      Make Admin
+                    </button>
+                  )}
+
+                  {admin ? (<></>) : (
+                    <button
+                      onClick={() => removeUser(id)}
+                      className="btn btn-accent"
+                      to="/dashboard/settings"
+                    >
+                      Remove User
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

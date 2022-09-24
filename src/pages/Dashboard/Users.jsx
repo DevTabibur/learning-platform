@@ -108,16 +108,10 @@ const Users = () => {
 export default Users;
 
 const ShowUserList = ({ user }) => {
-  // serial number increasing by one
-  const serial = 1;
-  let i = 1;
-  for (i = 1; i < serial; i++) {
-    console.log("hello");
-  }
-
+  
   return (
     <>
-      <tr>
+      {<tr>
         <td className="font-bold"></td>
         <td>
           <div className="flex items-center space-x-3">
@@ -137,7 +131,7 @@ const ShowUserList = ({ user }) => {
         <th>
           <Link to={`/dashboard/users/${user._id}`} className="btn btn-secondary">Details</Link>
         </th>
-      </tr>
+      </tr>}
     </>
   );
 };

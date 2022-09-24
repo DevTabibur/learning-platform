@@ -10,6 +10,11 @@ import RequireAuth from "./authentication/RequireAuth";
 import { publicRoutes as nestedAndPublicRoutes } from "./routes/publicRoutes";
 import privateRoute from "./routes/privateRoute";
 import NotFound from "./pages/NotFound/NotFound";
+import RequireAdmin from "./authentication/RequireAdmin";
+import Admin from "./pages/Dashboard/Admin";
+import Users from "./pages/Dashboard/Users";
+import UserDetails from "./shared/UserDetails/UserDetails";
+import Bookings from "./pages/Dashboard/Bookings";
 
 function App() {
   return (
@@ -28,10 +33,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/register" element={<Register />} />
-          <Route path="*" element={<NotFound/>} />
+          <Route path="*" element={<NotFound />} />
 
           {/* private routes with nested element*/}
 
+          {/* user route */}
           <Route path="/dashboard" element={<Dashboard />}>
             <Route element={<RequireAuth></RequireAuth>}>
               {privateRoute.map(({ path, name, Component }, idx) => (
@@ -39,6 +45,19 @@ function App() {
               ))}
             </Route>
           </Route>
+
+          {/* Admin Route */}
+          <Route element={<RequireAdmin />}>
+            <Route path="/dashboard" element={<Dashboard />}>
+              {/* nested route */}
+              <Route path="admin" element={<Admin />} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="users" element={<Users />} />
+              <Route path="users/:id" element={<UserDetails />} />
+            </Route>
+          </Route>
+
+
         </Routes>
       </Header>
     </>

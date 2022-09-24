@@ -15,5 +15,5 @@ export const publicRoutes = [
     {path:"/dashboard/exam", name:"Exam", Component: Exam},
     {path:"/dashboard/settings", name:"Settings", Component: Settings},
     {path:"/dashboard/profile", name:"Profile", Component: Profile},
-    {path:"/dashboard/tuitions", name:"Tuitions", Component: Tuitions},
+    {path:"/dashboard/tuitions", index: "index", name:"Tuitions", Component: Tuitions},
 ]

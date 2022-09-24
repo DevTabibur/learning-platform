@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase/firebase.init";
@@ -11,12 +11,13 @@ import useLoadMessages from "../../pages/hooks/useLoadMessages";
 const Header = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
   const [messages] = useLoadMessages();
-  // console.log('messages', messages)
 
+  const navigate = useNavigate();
   // for logout
   const logOut = () => {
     signOut(auth);
     localStorage.removeItem("accessToken");
+    navigate("/login");
   };
 
   return (
@@ -70,13 +71,12 @@ const Header = ({ children }) => {
                     tabIndex="0"
                     className="menu dropdown-content  p-2 shadow bg-accent rounded-box w-52 mt-5"
                   >
-                  {
-                    messages.map((msg, idx) =>
-                    <li key={idx}>
-                      <a>{msg.title}</a>
-                    </li>)
-                  }
-                    
+                    {messages.map((msg, idx) => (
+                      <li key={idx}>
+                        <a>{msg.title}</a>
+                      </li>
+                    ))}
+
                     <li>
                       <a>Item 2</a>
                     </li>
@@ -121,19 +121,23 @@ const Header = ({ children }) => {
                     className="btn btn-ghost btn-circle w-20 mr-5"
                   >
                     <div className="indicator mt-0 pt-0">
-                      <h2>John Doe</h2>
-                      <span className="badge badge-sm indicator-item -mt-2 lowercase">
-                        Admin
-                      </span>
+                      <h2>{user?.displayName}</h2>
                     </div>
                   </label>
                   <label
                     tabIndex="0"
                     className="btn btn-ghost btn-circle avatar"
                   >
-                    <div className="w-10 rounded-full">
-                      <img src={user?.photoURL} />
-                    </div>
+                    {user?.photoURL ? (
+                      <div className="w-10 rounded-full">
+                        <img src={user?.photoURL} alt="user_Photo" />
+                      </div>
+                    ) : (
+                      <img
+                        src="https://placeimg.com/80/80/people"
+                        alt="placing_avatar"
+                      />
+                    )}
                   </label>
                 </div>
 
