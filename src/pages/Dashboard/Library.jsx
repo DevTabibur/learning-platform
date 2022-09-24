@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useSubjects from "../hooks/useSubjects";
 import useAdmin from "../hooks/useAdmin";
 import useTeacher from "../hooks/useTeacher";
 import useLoadLibrary from "../hooks/useLoadLibrary";
@@ -15,8 +14,6 @@ const Library = () => {
   const [user, loading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
 
-  const [teacher] = useTeacher();
-  // console.log("teacher", teacher);
   const [libraryBooks] = useLoadLibrary();
 
   const [bookDetailsModal, setBookDetailsModal] = useState(null);
@@ -29,7 +26,6 @@ const Library = () => {
   } = useForm();
 
   const onSubmit = async (data, e) => {
-    const code = data.code;
     // db send to the server
     const url = `http://localhost:5000/library`;
     fetch(url, {
@@ -65,7 +61,6 @@ const Library = () => {
     return <Loader />;
   }
 
-  console.log('adimn', admin)
   return (
     <>
       <h2 className="text-xl font-bold mb-1 text-accent">Library Book List</h2>
@@ -240,7 +235,7 @@ const Library = () => {
                         <div className="form-control  w-full max-w-xs">
                           <input
                             type="submit"
-                            value="ADD SUBJECTS"
+                            value="ADD BOOKS"
                             className="btn btn-secondary mt-3"
                           />
                         </div>
@@ -293,8 +288,6 @@ const Library = () => {
         </div>
       ) : (
         <div className="grid md:grid-cols-1  gap-4">
-          <>
-            <div className="basis-4/4">
               <div className="card w-full bg-base-100 shadow">
                 <div className="card-body">
                   <div className="overflow-x-auto w-full">
@@ -333,11 +326,8 @@ const Library = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </>
         </div>
       )}
-
       {bookDetailsModal && (
         <ModalOfBookdetails
           key={1}
@@ -365,14 +355,10 @@ const ShowLibraryList = ({ book, setBookDetailsModal, bookDetailsModal }) => {
             onClick={() => setBookDetailsModal(book)}
             className="btn btn-sm btn-accent"
           >
-            <label htmlFor="books-details">Buy Now</label>
+            <label htmlFor="books-details">Details</label>
           </button>
         </td>
       </tr>
-
-      {/* <!-- The button to open modal --> */}
-
-      {/* <!-- Put this part before </body> tag --> */}
     </>
   );
 };

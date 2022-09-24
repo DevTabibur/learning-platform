@@ -5,10 +5,16 @@ import "./DashboardSidebar.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase/firebase.init";
 import useAdmin from "../../pages/hooks/useAdmin";
+import Loader from "../Loader/Loader";
 
 const DashboardSidebar = ({ children }) => {
-  const [user] = useAuthState(auth);
-  const [admin] = useAdmin(user);
+  const [user, loading] = useAuthState(auth);
+  const [admin, adminLoading] = useAdmin(user);
+
+  if (loading || adminLoading) {
+    return <Loader />;
+  }
+  
   return (
     <>
       <div className="drawer drawer-mobile">

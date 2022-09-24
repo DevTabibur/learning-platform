@@ -1,7 +1,7 @@
 import React from "react";
 
 const ModalOfBookdetails = ({bookDetailsModal, setBookDetailsModal}) => {
-    const {idNo, writerName, bookName, uploadDate} = bookDetailsModal
+    const {idNo, writerName, bookName, uploadDate} = bookDetailsModal;
   return (
     <>
       <>
