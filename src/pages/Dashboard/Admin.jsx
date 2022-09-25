@@ -75,124 +75,116 @@ const Admin = () => {
 
   return (
     <>
-      {admin ? (
-        <>
-          <h2 className="text-2xl mb-5 font-semibold">Admin Dashboard</h2>
+        <h2 className="text-2xl mb-5 font-semibold">Admin Dashboard</h2>
 
-          <div className="md:grid grid-cols-4 gap-4 mb-4">
-            <div className="first-col">
-              <div className="card card-side bg-base-100 border rounded-none p-5 clear-both">
-                <div className=" parent-icon mr-11">
-                  <FontAwesomeIcon
-                    className="text-info text-5xl"
-                    icon={faBookOpenReader}
-                  />
-                </div>
-                <div className="card-body  text-center p-0">
-                  <h2 className="text-xl font-semibold">Students</h2>
-                  <p>20000</p>
-                </div>
+        <div className="grid md:grid-cols-4 gap-4 mb-4">
+          <div className="first-col shadow-lg">
+            <div className="card">
+              <div className=" parent-icon mr-11">
+                <FontAwesomeIcon
+                  className="text-info text-5xl"
+                  icon={faBookOpenReader}
+                />
               </div>
-            </div>
-
-            <div className="second-col">
-              <div className="card card-side bg-base-100 border rounded-none p-5 clear-both">
-                <div className=" parent-icon2 mr-11">
-                  <FontAwesomeIcon
-                    className="text-accent text-5xl"
-                    icon={faPersonChalkboard}
-                  />
-                </div>
-                <div className="card-body  text-center p-0">
-                  <h2 className="text-xl font-semibold">Teachers</h2>
-                  <p>1500</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="third-col">
-              <div className="card card-side bg-base-100 border rounded-none p-5 clear-both">
-                <div className=" parent-icon3 mr-11">
-                  <FontAwesomeIcon
-                    className="text-success text-5xl"
-                    icon={faPeopleGroup}
-                  />
-                </div>
-                <div className="card-body  text-center p-0">
-                  <h2 className="text-xl font-semibold">Parents</h2>
-                  <p>15000</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="fourth-col">
-              <div className="card card-side bg-base-100 border rounded-none p-5 clear-both">
-                <div className=" parent-icon4 mr-11">
-                  <FontAwesomeIcon
-                    className="text-warning text-5xl"
-                    icon={faSackDollar}
-                  />
-                </div>
-                <div className="card-body  text-center p-0">
-                  <h2 className="text-xl font-semibold">$Earnings</h2>
-                  <p>$234445.04</p>
-                </div>
+              <div className="card-body  text-center p-0">
+                <h2 className="text-xl font-semibold">Students</h2>
+                <p>20000</p>
               </div>
             </div>
           </div>
 
-          {/* charts */}
-          <div className="md:flex flex-row gap-4 mt-10">
-            <div className="earnings-chart relative shadow border basis-1/2 w-50">
-              <h2 className="text-2xl mb-5">Earnings</h2>
-              <AreaChart
-                width={540}
-                height={400}
-                data={data}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-              >
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="uv"
-                  stroke="#8884d8"
-                  fillOpacity={1}
-                  fill="url(#colorUv)"
+          <div className="second-col shadow-lg">
+            <div className="card card-side bg-base-100 border rounded-none p-5 clear-both">
+              <div className=" parent-icon2 mr-11">
+                <FontAwesomeIcon
+                  className="text-accent text-5xl"
+                  icon={faPersonChalkboard}
                 />
-                <Area
-                  type="monotone"
-                  dataKey="pv"
-                  stroke="#82ca9d"
-                  fillOpacity={1}
-                  fill="url(#colorPv)"
-                />
-              </AreaChart>
+              </div>
+              <div className="card-body  text-center p-0">
+                <h2 className="text-xl font-semibold">Teachers</h2>
+                <p>1500</p>
+              </div>
             </div>
-
-            <div className="expenses-chart basis-1/4">22</div>
-
-            <div className="students-chart basis-1/4">33</div>
           </div>
-        </>
-      ) : (
-        <h2 className="text-2xl mb-5 font-semibold">
-          Only admin can see this Dashboard
-        </h2>
-      )}
-    </>
+
+          <div className="third-col shadow-lg">
+            <div className="card card-side bg-base-100 border rounded-none p-5 clear-both">
+              <div className=" parent-icon3 mr-11">
+                <FontAwesomeIcon
+                  className="text-success text-5xl"
+                  icon={faPeopleGroup}
+                />
+              </div>
+              <div className="card-body  text-center p-0">
+                <h2 className="text-xl font-semibold">Parents</h2>
+                <p>15000</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="fourth-col shadow-lg">
+            <div className="card card-side bg-base-100 border rounded-none p-5 clear-both">
+              <div className=" parent-icon4 mr-11">
+                <FontAwesomeIcon
+                  className="text-warning text-5xl"
+                  icon={faSackDollar}
+                />
+              </div>
+              <div className="card-body  text-center p-0">
+                <h2 className="text-xl font-semibold">$Earnings</h2>
+                <p>$234445.04</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* charts */}
+        {/* <div className="md:flex flex-row gap-4 mt-10">
+          <div className="earnings-chart relative shadow border basis-1/2">
+            <h2 className="text-2xl mb-5">Earnings</h2>
+            <AreaChart
+              width={540}
+              height={400}
+              data={data}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="uv"
+                stroke="#8884d8"
+                fillOpacity={1}
+                fill="url(#colorUv)"
+              />
+              <Area
+                type="monotone"
+                dataKey="pv"
+                stroke="#82ca9d"
+                fillOpacity={1}
+                fill="url(#colorPv)"
+              />
+            </AreaChart>
+          </div>
+
+          <div className="expenses-chart basis-1/4">22</div>
+
+          <div className="students-chart basis-1/4">33</div>
+        </div> */}
+      </>
   );
 };
 

@@ -49,69 +49,6 @@ const Header = ({ children }) => {
             <div className="flex-1 text-xl font-medium text-white">
               <Link to="/"> E-Learning</Link>
             </div>
-
-            {/* messages icon */}
-            {user && (
-              <>
-                <div className="dropdown dropdown-end hidden md:block mr-4">
-                  <label tabIndex="0" className="m-1">
-                    {/* <div class="badge badge-xs"></div> */}
-                    <div className="indicator mt-0 pt-0">
-                      <FontAwesomeIcon
-                        className="text-2xl mt-1"
-                        icon={faEnvelopeOpenText}
-                      />
-
-                      <span className="badge badge-sm bg-primary border-none indicator-item -mt-1 lowercase">
-                        {messages.length}
-                      </span>
-                    </div>
-                  </label>
-                  <ul
-                    tabIndex="0"
-                    className="menu dropdown-content  p-2 shadow bg-accent rounded-box w-52 mt-5"
-                  >
-                    {messages.map((msg, idx) => (
-                      <li key={idx}>
-                        <a>{msg.title}</a>
-                      </li>
-                    ))}
-
-                    <li>
-                      <a>Item 2</a>
-                    </li>
-                  </ul>
-                </div>
-                {/* notification / notice icon */}
-                <div className="dropdown dropdown-end hidden md:block mr-14">
-                  <label tabIndex="0" className="m-1">
-                    {/* <div class="badge badge-xs"></div> */}
-                    <div className="indicator mt-0 pt-0">
-                      <FontAwesomeIcon
-                        className="text-2xl mt-1"
-                        icon={faBell}
-                      />
-
-                      <span className="badge badge-sm bg-primary border-none indicator-item -mt-1 lowercase">
-                        5
-                      </span>
-                    </div>
-                  </label>
-                  <ul
-                    tabIndex="0"
-                    className="menu dropdown-content  p-2 shadow bg-accent rounded-box w-52 mt-5"
-                  >
-                    <li>
-                      <a>Item 1</a>
-                    </li>
-                    <li>
-                      <a>Item 2</a>
-                    </li>
-                  </ul>
-                </div>{" "}
-              </>
-            )}
-
             {/* profile / admin */}
             {user ? (
               <div className="dropdown dropdown-end">
