@@ -1,0 +1,7 @@
+.chat{
+    position: relative;
+}
+.chat-head{
+    padding: 10px;
+    background-color: aqua;
+}

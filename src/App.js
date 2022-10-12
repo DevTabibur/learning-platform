@@ -15,6 +15,8 @@ import Admin from "./pages/Dashboard/Admin";
 import Users from "./pages/Dashboard/Users";
 import UserDetails from "./shared/UserDetails/UserDetails";
 import Bookings from "./pages/Dashboard/Bookings";
+import Messenger from "./pages/Messenger/Messenger";
+import Chat from "./pages/Messenger/Chat";
 
 function App() {
   return (
@@ -56,8 +58,6 @@ function App() {
               <Route path="users/:id" element={<UserDetails />} />
             </Route>
           </Route>
-
-
         </Routes>
       </Header>
     </>

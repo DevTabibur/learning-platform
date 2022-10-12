@@ -56,7 +56,7 @@ const Login = () => {
   if (signInError || googleError || resetError) {
     showError = (
       <small>
-        <p className="text-red-500">
+        <p className="text-red-500  font-mono">
           {signInError?.message || googleError?.message || resetError?.message}
         </p>
       </small>
@@ -67,17 +67,13 @@ const Login = () => {
     <div className="h-screen flex bg-accent justify-center items-center">
       <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         <div className="card-body">
-          <h1 className="text-center text-2xl">Login</h1>
+          <h1 className="text-center text-2xl font-serif text-accent">Login</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email*</span>
-              </label>
               <input
                 type="text"
-                placeholder="email"
-                className="input input-bordered"
-                // className="input input-bordered w-full max-w-xs"
+                placeholder="Email"
+                className="input input-bordered font-mono"
                 {...register("email", {
                   required: {
                     value: true,
@@ -91,26 +87,22 @@ const Login = () => {
               />
               <label className="label my-1 py-0">
                 {errors.email?.type === "required" && (
-                  <span className="label-text-alt text-red-500">
+                  <span className="label-text-alt text-red-500 font-mono">
                     {errors.email.message}
                   </span>
                 )}
                 {errors.email?.type === "pattern" && (
-                  <span className="label-text-alt text-red-500">
+                  <span className="label-text-alt text-red-500 font-mono">
                     {errors.email.message}
                   </span>
                 )}
               </label>
             </div>
             <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-
               <input
                 type="password"
-                placeholder="password"
-                className="input input-bordered"
+                placeholder="Password"
+                className="input input-bordered font-mono"
                 {...register("password", {
                   required: {
                     value: true,
@@ -124,12 +116,12 @@ const Login = () => {
               />
               <label className="label my-1 py-0">
                 {errors.password?.type === "required" && (
-                  <span className="label-text-alt text-red-500">
+                  <span className="label-text-alt text-red-500 font-mono">
                     {errors.password.message}
                   </span>
                 )}
                 {errors.password?.type === "minLength" && (
-                  <span className="label-text-alt text-red-500">
+                  <span className="label-text-alt text-red-500 font-mono">
                     {errors.password.message}
                   </span>
                 )}
@@ -140,7 +132,7 @@ const Login = () => {
                   await sendPasswordResetEmail(email);
                 }}
               >
-                <p className="label-text-alt link link-hover font-semibold">
+                <p className="label-text-alt link link-hover font-semibold font-serif">
                   Forgot password?
                 </p>
               </label>
@@ -154,7 +146,7 @@ const Login = () => {
               ></input>
             </div>
             <div className="divider mb-0 pb-0">OR</div>
-            <div className="label-text-alt link link-hover my-2 font-semibold">
+            <div className="label-text-alt link link-hover my-2 font-semibold font-serif">
               <Link to="/register">Are you new here? Please register</Link>
             </div>
 

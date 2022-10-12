@@ -14,6 +14,7 @@
     "daisyui": "^2.22.0",
     "date-fns": "^2.29.2",
     "firebase": "^9.9.2",
+    "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-day-picker": "^8.1.1",
     "react-dom": "^18.2.0",
@@ -22,6 +23,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "recharts": "^2.1.13",
+    "socket.io-client": "^4.5.2",
     "sweetalert2": "^11.4.33",
     "web-vitals": "^2.1.4"
   },
