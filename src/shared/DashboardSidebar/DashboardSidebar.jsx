@@ -41,6 +41,9 @@ const DashboardSidebar = ({ children }) => {
                 <li className="mt-0.5 ">
                   <NavLink to="/dashboard/bookings">Bookings</NavLink>
                 </li>
+                <li className="mt-0.5 ">
+                  <NavLink to="/dashboard/upload-tuitions">Post Tuitions</NavLink>
+                </li>
               </div>
             </div>
             {/* not admin */}
@@ -51,9 +54,7 @@ const DashboardSidebar = ({ children }) => {
               <li className="bg-secondary mt-0.5">
                 <NavLink to="/dashboard/library">Library</NavLink>
               </li>
-              <li className="bg-secondary mt-0.5">
-                <NavLink to="/dashboard/notification">Notification</NavLink>
-              </li>
+
               <li className="bg-secondary mt-0.5">
                 <NavLink to="/dashboard/account">Account</NavLink>
               </li>

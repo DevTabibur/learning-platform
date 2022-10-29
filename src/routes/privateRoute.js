@@ -2,7 +2,6 @@ import React from "react";
 import Account from "../pages/Dashboard/Account";
 import Admin from "../pages/Dashboard/Admin";
 import Bookings from "../pages/Dashboard/Bookings";
-import Notifications from "../pages/Dashboard/Notifications";
 import Users from "../pages/Dashboard/Users";
 import Chat from "../pages/Messenger/Chat";
 import Messenger from "../pages/Messenger/Messenger";
@@ -11,11 +10,7 @@ import UserDetails from "../shared/UserDetails/UserDetails";
 
 export const privateRoute = [
   // {path:"/dashboard/admin", name: Admin, Component: Admin},
-  {
-    path: "/dashboard/notification",
-    name: Notifications,
-    Component: Notifications,
-  },
+  
   { path: "/dashboard/account", name: Account, Component: Account },
   { path: "/dashboard/messenger", name: Messenger, Component: Messenger },
   { path: "/dashboard/chat", name: Chat, Component: Chat },

@@ -7,7 +7,7 @@ const Bookings = () => {
     <>
       <div className="container mx-auto px-4 py-6">
         <h2 className="text-2xl font-bold text-accent font-serif">
-          Tuitions Bookings
+          Free Tuitions Bookings
         </h2>
 
         <div className="grid md:grid-cols-1 gap-4 mt-8">

@@ -1,5 +1,4 @@
 // demo 1 https://preview.themeforest.net/item/akkhor-school-management-admin-template/full_screen_preview/23687250?_ga=2.38672867.1358797260.1658868264-1240890369.1657795515
-// demo 1 https://technext.github.io/darkpan/form.html
 
 import Header from "./shared/Header/Header";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -17,6 +16,7 @@ import UserDetails from "./shared/UserDetails/UserDetails";
 import Bookings from "./pages/Dashboard/Bookings";
 import Messenger from "./pages/Messenger/Messenger";
 import Chat from "./pages/Messenger/Chat";
+import UploadTuitions from "./pages/UploadTuitions/UploadTuitions";
 
 function App() {
   return (
@@ -54,6 +54,7 @@ function App() {
               {/* nested route */}
               <Route path="admin" element={<Admin />} />
               <Route path="bookings" element={<Bookings />} />
+              <Route path="upload-tuitions" element={<UploadTuitions />} />
               <Route path="users" element={<Users />} />
               <Route path="users/:id" element={<UserDetails />} />
             </Route>
