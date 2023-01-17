@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  Link,
-  Navigate,
-  Outlet,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import auth from "../../firebase/firebase.init";
+import React from "react";
+import { Link } from "react-router-dom";
 import Loader from "../../shared/Loader/Loader";
 import Avatar from "../../assets/images/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png";
-import useToken from "../hooks/useToken";
-import useProfile from "../hooks/useProfileInfo";
+import useActiveUser from "../hooks/useActiveUser";
 
 const Profile = () => {
-  const [user, loading, error] = useAuthState(auth);
-  const [userProfileInfo] = useProfile();
-
+  const [activeUser, isLoading] = useActiveUser();
   // for loading
-  if (loading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -69,60 +58,90 @@ const Profile = () => {
       <div className="md:flex flex-row gap-x-6 gap-y-4">
         <div className="basis-1/3">
           <div className="card w-full bg-base-100 shadow border-2">
-            <div className=" relative">
-              <img
-                className="w-full h-44"
-                src="https://placeimg.com/400/225/arch"
-                alt="upload cover image"
-              />
-            </div>
-            <div className="card-body items-left text-left relative">
-              <div className="avatar online absolute -top-10 left-5">
-                <div className="w-24 rounded-full">
-                  {user?.photoURL ? (
-                    <img src={user?.photoURL} alt="Update Profile" />
-                  ) : (
-                    <img src={Avatar} alt="Update Profile" />
-                  )}
-                </div>
+            {activeUser?.cover ? (
+              <div className=" relative">
+                <img
+                  className="w-full h-44"
+                  src={`http://localhost:5000/${activeUser?.cover}`}
+                  alt="cover_img"
+                />
               </div>
+            ) : (
+              <div className=" relative">
+                <img
+                  className="w-full h-44"
+                  src="https://placeimg.com/400/225/arch"
+                  alt="cover_image"
+                />
+              </div>
+            )}
+
+            <div className="card-body items-left text-left relative">
+              {activeUser?.profile ? (
+                <div className="avatar online absolute -top-10 left-5">
+                  <div className="w-24 rounded-full">
+                    {activeUser?.profile ? (
+                      <img
+                        src={`http://localhost:5000/${activeUser?.profile}`}
+                        alt="Profile"
+                      />
+                    ) : (
+                      <img src={Avatar} alt="Update Profile" />
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="avatar online absolute -top-10 left-5">
+                  <div className="w-24 rounded-full">
+                    {activeUser?.profile ? (
+                      <img
+                        src="https://placeimg.com/400/225/arch"
+                        alt="Profile"
+                      />
+                    ) : (
+                      <img src={Avatar} alt="Update Profile" />
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div className="mt-10">
-                {user?.displayName ? (
-                  <h2 className="card-title">{user?.displayName}</h2>
+                {activeUser?.name ? (
+                  <h2 className="card-title">{activeUser?.name}</h2>
                 ) : (
                   <h2 className="card-title">Provide your Name</h2>
                 )}
 
-                {userProfileInfo?.bio ? (
-                  <p>{userProfileInfo?.bio}</p>
+                {activeUser?.bio ? (
+                  <p>{activeUser?.bio}</p>
                 ) : (
                   <p>Provide Bio Data</p>
                 )}
                 <hr className="px-0 mx-0 w-full my-3"></hr>
-                {userProfileInfo?.role ? (
+                {activeUser?.role ? (
                   <p className="mb-0">
                     <strong className="pr-1">Role:</strong>
-                    {userProfileInfo?.role}
+                    {activeUser?.role}
                   </p>
                 ) : (
                   <p className="mb-0">
                     <strong className="pr-1">Role:</strong>Update your role
                   </p>
                 )}
-                {userProfileInfo?.id ? (
+                {activeUser?.userID ? (
                   <p className="mb-0">
                     <strong className="pr-1">ID:</strong>
-                    {userProfileInfo?.id}
+                    {activeUser?.userID}
                   </p>
                 ) : (
                   <p className="mb-0">
                     <strong className="pr-1">ID:</strong>Update Your ID
                   </p>
                 )}
-                {userProfileInfo?.class ? (
+                {activeUser?.class ? (
                   <p className="mb-0">
                     <strong className="pr-1">Class / Section:</strong>
-                    {userProfileInfo?.class}
+                    {activeUser?.class}
                   </p>
                 ) : (
                   <p className="mb-0">
@@ -147,10 +166,10 @@ const Profile = () => {
               <hr></hr>
               <div className="general-info-list">
                 <ul className="">
-                  {userProfileInfo?.name ? (
+                  {activeUser?.name ? (
                     <li className="flex my-2">
                       <strong>Name:</strong>
-                      <p className="ml-4">{userProfileInfo?.name}</p>
+                      <p className="ml-4">{activeUser?.name}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -158,10 +177,10 @@ const Profile = () => {
                       <p className="ml-4">Update Your Name</p>
                     </li>
                   )}
-                  {userProfileInfo?.fathersName ? (
+                  {activeUser?.fathersName ? (
                     <li className="flex my-2">
                       <strong>Father's Name:</strong>
-                      <p className="ml-4">{userProfileInfo?.fathersName}</p>
+                      <p className="ml-4">{activeUser?.fathersName}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -169,10 +188,10 @@ const Profile = () => {
                       <p className="ml-4">Update Father's Name</p>
                     </li>
                   )}
-                  {userProfileInfo?.mothersName ? (
+                  {activeUser?.mothersName ? (
                     <li className="flex my-2">
                       <strong>Mother's Name:</strong>
-                      <p className="ml-4">{userProfileInfo?.mothersName}</p>
+                      <p className="ml-4">{activeUser?.mothersName}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -180,10 +199,10 @@ const Profile = () => {
                       <p className="ml-4">Update Mother's Name</p>
                     </li>
                   )}
-                  {userProfileInfo?.gender ? (
+                  {activeUser?.gender ? (
                     <li className="flex my-2">
                       <strong>Gender:</strong>
-                      <p className="ml-4">{userProfileInfo?.gender}</p>
+                      <p className="ml-4">{activeUser?.gender}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -191,10 +210,10 @@ const Profile = () => {
                       <p className="ml-4">Update Your Gender</p>
                     </li>
                   )}
-                  {userProfileInfo?.dob ? (
+                  {activeUser?.dob ? (
                     <li className="flex my-2">
                       <strong>Date of Birth:</strong>
-                      <p className="ml-4">{userProfileInfo?.dob}</p>
+                      <p className="ml-4">{activeUser?.dob}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -202,10 +221,10 @@ const Profile = () => {
                       <p className="ml-4">Update Date Of Birth</p>
                     </li>
                   )}
-                  {userProfileInfo?.religion ? (
+                  {activeUser?.religion ? (
                     <li className="flex my-2">
                       <strong>Religion:</strong>
-                      <p className="ml-4">{userProfileInfo?.religion}</p>
+                      <p className="ml-4">{activeUser?.religion}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">
@@ -213,25 +232,14 @@ const Profile = () => {
                       <p className="ml-4">Update religion</p>
                     </li>
                   )}
-                  {userProfileInfo?.occupation ? (
-                    <li className="flex my-2">
-                      <strong>Father's Occupation:</strong>
-                      <p className="ml-4">{userProfileInfo?.occupation}</p>
-                    </li>
-                  ) : (
-                    <li className="flex my-2">
-                      <strong>Father's Occupation:</strong>
-                      <p className="ml-4">Update Occupation</p>
-                    </li>
-                  )}
                   <li className="flex my-2">
                     <strong>E-mail:</strong>
-                    <p className="ml-4">{user?.email}</p>
+                    <p className="ml-4">{activeUser?.email}</p>
                   </li>
-                  {userProfileInfo?.phone ? (
+                  {activeUser?.phone ? (
                     <li className="flex my-2">
                       <strong>Phone:</strong>
-                      <p className="ml-4">{userProfileInfo?.phone}</p>
+                      <p className="ml-4">{activeUser?.phone}</p>
                     </li>
                   ) : (
                     <li className="flex my-2">

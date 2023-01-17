@@ -13,6 +13,7 @@
 11. sweet alert 2
 12. npm i query-string
 13. npm install socket.io-client
+14. npm i jwt_decode
 
 ## Description
 
@@ -29,3 +30,6 @@ E-Learning site has two type of implementation. Admin and user(students/teachers
 
 **Speciality**
 I'm using TTL index to delete old messages / notifications from data / front-end automatically
+
+**problems**
+1. network tab e auto render hosse fetch data.

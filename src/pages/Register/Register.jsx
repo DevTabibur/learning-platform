@@ -1,68 +1,65 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {
-  useCreateUserWithEmailAndPassword,
-  useSignInWithGoogle,
-  useUpdateProfile,
-} from "react-firebase-hooks/auth";
-import auth from "../../firebase/firebase.init";
 import Loader from "../../shared/Loader/Loader";
-import useToken from "../hooks/useToken";
+import { toast } from "react-toastify";
+import useActiveUser from "../hooks/useActiveUser";
+import Swal from "sweetalert2";
 
 const Register = () => {
-  const [
-    createUserWithEmailAndPassword,
-    createUser,
-    createLoading,
-    createError,
-  ] = useCreateUserWithEmailAndPassword(auth);
-  const [signInWithGoogle, googleUser, googleLoading, googleError] =
-    useSignInWithGoogle(auth);
-  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  // const [activeUser, activeUserData, isLoading] = useActiveUser();
+  // console.log("register", activeUser, activeUserData, isLoading);
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const isActive = localStorage.getItem("accessToken");
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    await createUserWithEmailAndPassword(data.email, data.password);
-    await updateProfile({ displayName: data.name });
-  };
-
-  // for getting successful user
-  const [token] = useToken(createUser || googleUser);
-  // dependency is must be given here.. otherwise it will not work..correctly
-  useEffect(() => {
-    if (token) {
-      navigate("/dashboard");
+    // if user is register once, then he'll not register again before logout.
+    if (isActive) {
+      Swal.fire({
+        title: "Authentication is failed",
+        text: "Please logout for again registration",
+        icon: "error",
+      });
+    } else {
+      const url = `http://localhost:5000/api/v1/user/register`;
+      setRegisterLoading(true);
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.code === 400 || data.code === 401 || data.code === 403) {
+            toast.error(data.error, { toastId: "customId" });
+          } else {
+            console.log("everything is perfect", data);
+            const token = data?.data?.token;
+            localStorage.setItem("accessToken", JSON.stringify(token));
+            toast.success(data?.message, { toastId: "customId" });
+            navigate("/");
+            reset();
+            // window.location.reload();
+          }
+          setRegisterLoading(false);
+        });
     }
-  }, [token, navigate]);
-
-  // for loading/processing
-  if (createLoading || googleLoading || updating) {
-    return (
-      <>
-        <Loader />
-      </>
-    );
-  }
-
-  // fow showing error messages
-  let signInError;
-  if (createError || googleError || updateError) {
-    signInError = (
-      <small>
-        <p className="text-red-500 font-mono">
-          {createError?.message || googleError?.message || updateError?.message}
-        </p>
-      </small>
-    );
+  };
+  // for loading
+  if (registerLoading) {
+    return <Loader />;
   }
 
   return (
@@ -162,7 +159,7 @@ const Register = () => {
                 </label>
               </div>
               <label className="label">
-                <span className="label-text">{signInError}</span>
+                {/* <span className="label-text">{signInError}</span> */}
               </label>
               <div className="form-control mt-6">
                 <input
@@ -177,12 +174,12 @@ const Register = () => {
                 <Link to="/login">Already have account? Please login.</Link>
               </div>
 
-              <div
+              {/* <div
                 className="btn btn-glass hover:btn-accent flex"
                 onClick={() => signInWithGoogle()}
               >
                 Continue with google
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

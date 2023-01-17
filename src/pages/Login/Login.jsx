@@ -2,65 +2,70 @@ import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import auth from "../../firebase/firebase.init";
-import {
-  useSendPasswordResetEmail,
-  useSignInWithEmailAndPassword,
-  useSignInWithGoogle,
-} from "react-firebase-hooks/auth";
+
 import Loader from "../../shared/Loader/Loader";
-import useToken from "../hooks/useToken";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const [signInWithEmailAndPassword, signInUser, signInLoading, signInError] =
-    useSignInWithEmailAndPassword(auth);
-  const [signInWithGoogle, googleUser, googleLoading, googleError] =
-    useSignInWithGoogle(auth);
-  const [sendPasswordResetEmail, resetLoading, resetError] =
-    useSendPasswordResetEmail(auth);
-
+  const [loginLoading, setLoginLoading] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const getToken = localStorage.getItem("accessToken");
+  const url = `http://localhost:5000/api/v1/user/login`;
 
-  const [email, setEmail] = useState([]);
   const onSubmit = async (data) => {
-    await signInWithEmailAndPassword(data.email, data.password);
-    await setEmail(data.email);
+    console.log("data", data);
+    if (getToken) {
+      Swal.fire({
+        title: "Failed",
+        text: "Please Logout for again login",
+        icon: "error",
+      });
+    } else {
+      setLoginLoading(true);
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log("data", data);
+          setLoginLoading(false);
+          if (data.code === 200) {
+            Swal.fire({
+              title: data?.status,
+              text: data?.message,
+              icon: "success",
+            });
+            const token = data?.data?.token;
+            localStorage.setItem("accessToken", JSON.stringify(token));
+            navigate("/");
+            window.location.reload();
+          } else if (
+            data.code === 401 ||
+            data.code === 403 ||
+            data.code === 400
+          ) {
+            Swal.fire({
+              title: data?.status,
+              text: data?.error,
+              icon: "error",
+            });
+          }
+        });
+    }
   };
 
-  // for returning user the exact page he wants to enter after login
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // for getting user
-  // if user is login, then we'll give it token.. and then redirect to the home page
-  const [token] = useToken(googleUser || signInUser);
-  // if token is valid, then user will automatically redirect their page..
-  let from = location.state?.from?.pathname || "/";
-  useEffect(() => {
-    if (token) {
-      navigate(from, { replace: true });
-    }
-  }, [token, from, navigate]);
-
-  // for loading
-  if (signInLoading || googleLoading || resetLoading) {
+  // for loader
+  if (loginLoading) {
     return <Loader />;
-  }
-
-  // for error showing message
-  let showError;
-  if (signInError || googleError || resetError) {
-    showError = (
-      <small>
-        <p className="text-red-500  font-mono">
-          {signInError?.message || googleError?.message || resetError?.message}
-        </p>
-      </small>
-    );
   }
 
   return (
@@ -129,7 +134,7 @@ const Login = () => {
               <label
                 className="label"
                 onClick={async () => {
-                  await sendPasswordResetEmail(email);
+                  // await sendPasswordResetEmail(email);
                 }}
               >
                 <p className="label-text-alt link link-hover font-semibold font-serif">
@@ -137,7 +142,6 @@ const Login = () => {
                 </p>
               </label>
             </div>
-            {showError}
             <div className="form-control mt-6">
               <input
                 className="btn btn-primary"
@@ -148,13 +152,6 @@ const Login = () => {
             <div className="divider mb-0 pb-0">OR</div>
             <div className="label-text-alt link link-hover my-2 font-semibold font-serif">
               <Link to="/register">Are you new here? Please register</Link>
-            </div>
-
-            <div
-              className="btn btn-glass hover:btn-accent flex"
-              onClick={() => signInWithGoogle()}
-            >
-              Continue with google
             </div>
           </form>
         </div>

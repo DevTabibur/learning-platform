@@ -10,7 +10,7 @@ const useLoadMessages = () => {
             // console.log('inside of useLoadMessages Hooks', data);
             setMessages(data)
         })
-    }, [messages])
+    }, [])
   return [messages]
 }
 

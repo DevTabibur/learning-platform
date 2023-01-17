@@ -17,6 +17,8 @@ import Bookings from "./pages/Dashboard/Bookings";
 import Messenger from "./pages/Messenger/Messenger";
 import Chat from "./pages/Messenger/Chat";
 import UploadTuitions from "./pages/UploadTuitions/UploadTuitions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -61,6 +63,7 @@ function App() {
           </Route>
         </Routes>
       </Header>
+      <ToastContainer />
     </>
   );
 }

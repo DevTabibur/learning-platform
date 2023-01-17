@@ -11,9 +11,9 @@ const DashboardSidebar = ({ children }) => {
   const [user, loading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
 
-  if (loading || adminLoading) {
-    return <Loader />;
-  }
+  // if (loading || adminLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <>

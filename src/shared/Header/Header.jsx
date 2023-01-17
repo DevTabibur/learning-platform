@@ -1,23 +1,27 @@
 import React from "react";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../firebase/firebase.init";
-import { signOut } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelopeOpenText } from "@fortawesome/free-solid-svg-icons";
 import useLoadMessages from "../../pages/hooks/useLoadMessages";
+import useActiveUser from "../../pages/hooks/useActiveUser";
+import Swal from "sweetalert2";
 
 const Header = ({ children }) => {
-  const [user, loading, error] = useAuthState(auth);
+  const [activeUser, isLoading] = useActiveUser();
   const [messages] = useLoadMessages();
 
   const navigate = useNavigate();
   // for logout
+
   const logOut = () => {
-    signOut(auth);
     localStorage.removeItem("accessToken");
+    Swal.fire({
+      title: "Logout Successfully",
+      icon: "success",
+    });
     navigate("/login");
+    window.location.reload();
   };
 
   return (
@@ -50,7 +54,7 @@ const Header = ({ children }) => {
               <Link to="/"> E-Learning</Link>
             </div>
             {/* profile / admin */}
-            {user ? (
+            {activeUser?.email ? (
               <div className="dropdown dropdown-end">
                 <div className="flex">
                   <label
@@ -58,16 +62,19 @@ const Header = ({ children }) => {
                     className="btn btn-ghost btn-circle w-20 mr-5"
                   >
                     <div className="indicator mt-0 pt-0">
-                      <h2>{user?.displayName}</h2>
+                      <h2>{activeUser?.name}</h2>
                     </div>
                   </label>
                   <label
                     tabIndex="0"
                     className="btn btn-ghost btn-circle avatar"
                   >
-                    {user?.photoURL ? (
+                    {activeUser?.profile ? (
                       <div className="w-10 rounded-full">
-                        <img src={user?.photoURL} alt="user_Photo" />
+                        <img
+                          src={`http://localhost:5000/${activeUser?.profile}`}
+                          alt="user_Photo"
+                        />
                       </div>
                     ) : (
                       <img
