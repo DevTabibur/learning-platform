@@ -28,7 +28,7 @@ const useActiveUser = () => {
           .then((res) => res.json())
           .then((data) => {
             setIsLoading(false);
-            console.log('useActiveUser inside hooks', data)
+            // console.log('useActiveUser inside hooks', data)
             if (data.code === 403 || data.code === 401 || data.code === 400) {
               return Swal.fire({
                 title: data?.status,

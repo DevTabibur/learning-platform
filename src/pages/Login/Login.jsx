@@ -18,7 +18,6 @@ const Login = () => {
   const url = `http://localhost:5000/api/v1/user/login`;
 
   const onSubmit = async (data) => {
-    console.log("data", data);
     if (getToken) {
       Swal.fire({
         title: "Failed",
@@ -133,9 +132,7 @@ const Login = () => {
               </label>
               <label
                 className="label"
-                onClick={async () => {
-                  // await sendPasswordResetEmail(email);
-                }}
+                onClick={() => navigate("/forgot-password")}
               >
                 <p className="label-text-alt link link-hover font-semibold font-serif">
                   Forgot password?

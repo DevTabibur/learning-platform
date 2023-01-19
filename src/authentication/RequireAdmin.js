@@ -3,20 +3,25 @@ import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import auth from "../firebase/firebase.init";
+import useActiveUser from "../pages/hooks/useActiveUser";
 import useAdmin from "../pages/hooks/useAdmin";
 import Loader from "../shared/Loader/Loader";
 
 const RequireAdmin = () => {
   const location = useLocation();
-  const [user, loading] = useAuthState(auth);
+  const [activeUser, isLoading] =useActiveUser()
 
-  const [admin, adminLoading] = useAdmin(user);
+  // const [admin, adminLoading] = useAdmin(activeUser);
+  const admin = true;
 
-  if(loading || adminLoading){
+  // if(isLoading || adminLoading){
+  //   return <Loader/>
+  // }
+  if(isLoading){
     return <Loader/>
   }
 
-  if (!user || !admin) {
+  if (!activeUser || !admin) {
     // signOut(auth)
     return <Navigate to="/" replace />;
   }

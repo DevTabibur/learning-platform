@@ -1,5 +1,11 @@
 import React from "react";
-import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faEnvelopeOpenText } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +18,7 @@ const Header = ({ children }) => {
   const [messages] = useLoadMessages();
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   // for logout
 
   const logOut = () => {
@@ -30,7 +37,16 @@ const Header = ({ children }) => {
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
           {/* <!-- Navbar --> */}
-          <div className="w-full navbar bg-secondary text-white lg:px-20">
+          <div
+            className="w-full navbar bg-secondary text-white lg:px-20"
+            style={
+              pathname.includes("forgot-password") ||
+              pathname.includes("/login") ||
+              pathname.includes("/register")
+                ? { display: "none" }
+                : { display: "flex" }
+            }
+          >
             <label
               className="btn btn-ghost btn-circle lg:hidden text-white mr-4"
               htmlFor="my-drawer-2"

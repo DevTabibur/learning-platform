@@ -4,14 +4,13 @@ import Services from "./Services";
 import BookingModal from "./BookingModal";
 import { Navigate, useNavigate } from "react-router-dom";
 
-
 const AvailableTuitions = ({ date }) => {
   const [services, setServices] = useState([]);
   const [appointment, setAppointment] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url = `http://localhost:5000/tuition-services`;
+    const url = `http://localhost:5000/api/v1/tuition`;
     fetch(url, {
       method: "GET",
       headers: {
@@ -21,14 +20,10 @@ const AvailableTuitions = ({ date }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log('services data', data);
-        if(data.message === 'forbidden'){
-          navigate("/login")
-        }
-        setServices(data);
+        // console.log("services data", data.data);
+        setServices(data?.data);
       });
   }, []);
-
 
   return (
     <>

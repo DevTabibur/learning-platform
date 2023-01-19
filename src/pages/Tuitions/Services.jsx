@@ -1,16 +1,18 @@
 import React from "react";
 
 const Services = ({ service, setAppointment }) => {
-  const { name, slots } = service;
+  const { tuitionSubject, slots } = service;
 
+            {/* <span>{slots[0]}</span> */}
+console.log(slots)
 
   return (
     <div className="card lg:max-w-lg bg-base-100 shadow-xl">
       <div className="card-body text-center">
-        <h2 className="text-xl font-bold text-secondary">{name}</h2>
+        <h2 className="text-xl font-bold text-secondary">{tuitionSubject}</h2>
         <p>
           {slots.length > 0 ? (
-            <span>{slots[0]}</span>
+            <span>{slots}</span>
           ) : (
             <span className="text-red-500">Try another date.</span>
           )}

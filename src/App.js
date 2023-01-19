@@ -19,6 +19,7 @@ import Chat from "./pages/Messenger/Chat";
 import UploadTuitions from "./pages/UploadTuitions/UploadTuitions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ForgotPassword from "./shared/ForgotPassword/ForgotPassword";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<NotFound />} />
 
           {/* private routes with nested element*/}
